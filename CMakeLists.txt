@@ -90,11 +90,11 @@ if(USE_CONAN)
     # Packages
     REQUIRES
     backward-cpp/1.6
-    catch2/2.13.9
-    fmt/8.0.1
+    catch2/*
+    fmt/*
     # Options
     OPTIONS
-    catch2:with_main=True
+    catch2/*:with_main=True
     ${conan_opts}
     # Force cppstd to be the same as this CMakeLists.txt's
     SETTINGS
