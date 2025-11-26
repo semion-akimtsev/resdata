@@ -48,31 +48,41 @@ endif()
 # -----------------------------------------------------------------
 
 if(USE_CONAN)
-  if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-    message(
-      STATUS
-        "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-    file(
-      DOWNLOAD
-      "https://raw.githubusercontent.com/conan-io/cmake-conan/0.18.1/conan.cmake"
-      "${CMAKE_BINARY_DIR}/conan.cmake")
 
-    # Patch the downloaded conan.cmake to support MSVC 1944 (VS 2022)
-    message(STATUS "Patching conan.cmake for MSVC 1944 support")
-    file(READ "${CMAKE_BINARY_DIR}/conan.cmake" CONAN_CMAKE_CONTENT)
+    if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan_toolchain.cmake")
+        message(STATUS "Running conan install (two-step to avoid layout bug)...")
+    
+        # Step 1: Install packages ONLY (no generators = no layout trigger)
+        execute_process(
+            COMMAND conan install "${CMAKE_SOURCE_DIR}"
+                    --output-folder "${CMAKE_BINARY_DIR}"
+                    --build=missing
+                    -s compiler.cppstd=${CMAKE_CXX_STANDARD}
+                    -s compiler.version=194
+                    -s compiler.runtime=dynamic
+            WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+            RESULT_VARIABLE result1
+        )
+        if(NOT result1 EQUAL 0)
+            message(FATAL_ERROR "Conan install step 1 failed")
+        endif()
+    
+        # Step 2: Generate ONLY (now packages exist, no full install)
+        execute_process(
+            COMMAND conan install "${CMAKE_SOURCE_DIR}"
+                    --output-folder "${CMAKE_BINARY_DIR}"
+                    -g CMakeToolchain
+                    -g CMakeDeps
+            WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+            RESULT_VARIABLE result2
+        )
+        if(NOT result2 EQUAL 0)
+            message(FATAL_ERROR "Conan generate step 2 failed")
+        endif()
+    endif()
 
-    string(
-      REPLACE
-        "elseif(NOT MSVC_VERSION VERSION_LESS 1930 AND MSVC_VERSION VERSION_LESS 1940)"
-        "elseif(NOT MSVC_VERSION VERSION_LESS 1930 AND MSVC_VERSION VERSION_LESS 1950)"
-        CONAN_CMAKE_CONTENT
-        "${CONAN_CMAKE_CONTENT}")
-
-    file(WRITE "${CMAKE_BINARY_DIR}/conan.cmake" "${CONAN_CMAKE_CONTENT}")
-    message(STATUS "conan.cmake patched successfully for MSVC 1944 support")
-  endif()
-
-  include(${CMAKE_BINARY_DIR}/conan.cmake)
+    # Include the generated toolchain (MANDATORY for find_package to work)
+    include("${CMAKE_BINARY_DIR}/conan_toolchain.cmake")
 
   if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     # set(conan_opts ...)
@@ -86,27 +96,25 @@ if(USE_CONAN)
         "Unknown platform. Conan packages may not be configures correctly.")
   endif()
 
-  conan_cmake_run(
-    # Packages
-    REQUIRES
-    backward-cpp/1.6
-    catch2/3.11.0
-    fmt/12.1.0
-    # Options
-    OPTIONS
-    catch2/*:with_main=True
-    ${conan_opts}
-    # Force cppstd to be the same as this CMakeLists.txt's
-    SETTINGS
-    compiler=msvc
-    compiler.cppstd=${CMAKE_CXX_STANDARD}
-    compiler.runtime=dynamic
-    compiler.version=194
-    # Build from source if there are no pre-compiled binaries
-    BUILD
-    missing
-    GENERATORS
-    cmake_find_package)
+    include(${CMAKE_BINARY_DIR}/conan_toolchain.cmake)
+
+    if(TARGET backward::backward)
+    target_include_directories(backward::backward INTERFACE
+        "${CMAKE_BINARY_DIR}/backward-cpp/include")
+    add_library(backward-cpp::backward-cpp ALIAS backward::backward)
+    endif()
+
+    find_package(fmt REQUIRED)
+    find_package(Catch2 REQUIRED)
+
+    # backward-cpp workaround – it doesn't ship a proper Config.cmake
+    find_package(Backward REQUIRED HINTS "${CMAKE_BINARY_DIR}")
+
+    target_link_libraries(resdata PRIVATE
+    fmt::fmt
+    Catch2::Catch2WithMain
+    backward-cpp::backward-cpp)
+
 endif(USE_CONAN)
 
 # -----------------------------------------------------------------
