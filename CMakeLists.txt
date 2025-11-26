@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(resdata C CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(GNUInstallDirs)
@@ -98,7 +98,10 @@ if(USE_CONAN)
     ${conan_opts}
     # Force cppstd to be the same as this CMakeLists.txt's
     SETTINGS
+    compiler=msvc
     compiler.cppstd=${CMAKE_CXX_STANDARD}
+    compiler.runtime=dynamic
+    compiler.version=194
     # Build from source if there are no pre-compiled binaries
     BUILD
     missing
