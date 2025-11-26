@@ -90,8 +90,8 @@ if(USE_CONAN)
     # Packages
     REQUIRES
     backward-cpp/1.6
-    catch2/*
-    fmt/*
+    catch2/3.11.0
+    fmt/12.1.0
     # Options
     OPTIONS
     catch2/*:with_main=True
