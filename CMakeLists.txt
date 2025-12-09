@@ -42,6 +42,15 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
       "RelWithDebInfo")
 endif()
 
+
+# DEBUG: Print all targets (remove when done)
+get_property(_targets DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY BUILDSYSTEM_TARGETS)
+message(STATUS "=== ALL CMAKE TARGETS ===")
+foreach(t ${_targets})
+    message(STATUS "  â†’ ${t}")
+endforeach()
+message(STATUS "=========================")
+
 # -----------------------------------------------------------------
 # Conan: C++ package manager
 # https://docs.conan.io/en/latest/howtos/cmake_launch.html
@@ -84,36 +93,28 @@ if(USE_CONAN)
     # Include the generated toolchain (MANDATORY for find_package to work)
     include("${CMAKE_BINARY_DIR}/conan_toolchain.cmake")
 
-  if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    # set(conan_opts ...)
-  elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    set(conan_opts backward-cpp:stack_details=backtrace_symbol)
-  elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    # set(conan_opts ...)
-  else()
-    message(
-      WARNING
-        "Unknown platform. Conan packages may not be configures correctly.")
-  endif()
-
-    include(${CMAKE_BINARY_DIR}/conan_toolchain.cmake)
-
-    if(TARGET backward::backward)
-    target_include_directories(backward::backward INTERFACE
-        "${CMAKE_BINARY_DIR}/backward-cpp/include")
-    add_library(backward-cpp::backward-cpp ALIAS backward::backward)
+    if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+      # set(conan_opts ...)
+    elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+      set(conan_opts backward-cpp:stack_details=backtrace_symbol)
+    elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+      # set(conan_opts ...)
+    else()
+      message(
+        WARNING
+          "Unknown platform. Conan packages may not be configures correctly.")
     endif()
 
-    find_package(fmt REQUIRED)
-    find_package(Catch2 REQUIRED)
 
-    # backward-cpp workaround – it doesn't ship a proper Config.cmake
-    find_package(Backward REQUIRED HINTS "${CMAKE_BINARY_DIR}")
+   # -----------------------------------------------------------------
+   
+    find_path(BACKWARD_INCLUDE_DIR
+          NAMES backward.hpp
+          PATH_SUFFIXES include REQUIRED
+      )
+    message(STATUS "Found backward.hpp at: ${BACKWARD_INCLUDE_DIR}")
 
-    target_link_libraries(resdata PRIVATE
-    fmt::fmt
-    Catch2::Catch2WithMain
-    backward-cpp::backward-cpp)
+  include_directories(${BACKWARD_INCLUDE_DIR})
 
 endif(USE_CONAN)
 
