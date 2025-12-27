@@ -7,9 +7,10 @@ python -m pip install -r requirements.txt
 
 conan profile detect --force
 
-Remove-Item -Force -r $OUTPUT_DIR
+Remove-Item -ea Ignore -Force -r $OUTPUT_DIR
 mkdir $OUTPUT_DIR
 Set-Location $OUTPUT_DIR
 
 cmake .. -A $ARCHITECTURE -G $GENERATOR
 cmake --build . --config $CONFIG
+Set-Location ..

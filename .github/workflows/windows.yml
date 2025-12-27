@@ -1,5 +1,8 @@
 name: Windows Compile
 
+env:
+  CONFIG: "Release"
+
 on:
  push:
    branches:
@@ -38,11 +41,16 @@ jobs:
     - name: Install dependencies
       run: |
         python.exe -m pip install --upgrade pip
-        python.exe -m pip install "conan<2"
+        python.exe -m pip install --upgrade conan
 
-    - name: Build ResData
+    - name: Build
       run: |
-        python.exe -m pip install -r requirements.txt
-        mkdir cmake-build
-        cmake -S . -B cmake-build -G "Visual Studio 17 2022"
-        cmake --build cmake-build
+        ./build.ps1
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Binaries
+        path: output\lib\${{env.CONFIG}}\*
+        if-no-files-found: error
+        retention-days: 30
