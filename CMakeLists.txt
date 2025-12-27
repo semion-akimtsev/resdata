@@ -66,9 +66,6 @@ if(USE_CONAN)
             COMMAND conan install "${CMAKE_SOURCE_DIR}"
                     --output-folder "${CMAKE_BINARY_DIR}"
                     --build=missing
-                    -s compiler.cppstd=${CMAKE_CXX_STANDARD}
-                    -s compiler.version=194
-                    -s compiler.runtime=dynamic
             WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
             RESULT_VARIABLE result1
         )

@@ -30,5 +30,5 @@ scratch.sparsebundle
 
 CMakeSettings.json
 
-/out
+/output
 /.vs
