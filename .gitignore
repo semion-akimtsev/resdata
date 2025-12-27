@@ -29,3 +29,6 @@ scratch.sparsebundle
 /dist-*
 
 CMakeSettings.json
+
+/output
+/.vs
