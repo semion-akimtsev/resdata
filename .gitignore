@@ -32,3 +32,6 @@ CMakeSettings.json
 
 /output
 /.vs
+
+bin/
+obj/

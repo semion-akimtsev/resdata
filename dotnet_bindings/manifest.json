@@ -1,0 +1,3399 @@
+{
+  "ert\\geometry\\geo_pointset.hpp": [
+    {
+      "ret": "void",
+      "name": "geo_pointset_free",
+      "args": "geo_pointset_type *pointset"
+    },
+    {
+      "ret": "int",
+      "name": "geo_pointset_get_size",
+      "args": "const geo_pointset_type *pointset"
+    },
+    {
+      "ret": "double",
+      "name": "geo_pointset_iget_z",
+      "args": "const geo_pointset_type *pointset, int index"
+    },
+    {
+      "ret": "void",
+      "name": "geo_pointset_iset_z",
+      "args": "geo_pointset_type *pointset, int index, double value"
+    },
+    {
+      "ret": "void",
+      "name": "geo_pointset_shift_z",
+      "args": "geo_pointset_type *pointset, double value"
+    },
+    {
+      "ret": "void",
+      "name": "geo_pointset_assign_z",
+      "args": "geo_pointset_type *pointset, double value"
+    },
+    {
+      "ret": "void",
+      "name": "geo_pointset_scale_z",
+      "args": "geo_pointset_type *pointset, double value"
+    },
+    {
+      "ret": "void",
+      "name": "geo_pointset_isub",
+      "args": "geo_pointset_type *self, const geo_pointset_type *other"
+    },
+    {
+      "ret": "void",
+      "name": "geo_pointset_isqrt",
+      "args": "geo_pointset_type *pointset"
+    }
+  ],
+  "ert\\geometry\\geo_polygon.hpp": [
+    {
+      "ret": "void",
+      "name": "geo_polygon_free",
+      "args": "geo_polygon_type *polygon"
+    },
+    {
+      "ret": "void",
+      "name": "geo_polygon_free__",
+      "args": "void *arg"
+    },
+    {
+      "ret": "void",
+      "name": "geo_polygon_add_point",
+      "args": "geo_polygon_type *polygon, double x, double y"
+    },
+    {
+      "ret": "void",
+      "name": "geo_polygon_add_point_front",
+      "args": "geo_polygon_type *polygon, double x, double y"
+    },
+    {
+      "ret": "void",
+      "name": "geo_polygon_reset",
+      "args": "geo_polygon_type *polygon"
+    },
+    {
+      "ret": "void",
+      "name": "geo_polygon_close",
+      "args": "geo_polygon_type *polygoon"
+    },
+    {
+      "ret": "int",
+      "name": "geo_polygon_get_size",
+      "args": "const geo_polygon_type *polygon"
+    },
+    {
+      "ret": "void",
+      "name": "geo_polygon_set_name",
+      "args": "geo_polygon_type *polygon, const char *name"
+    },
+    {
+      "ret": "double",
+      "name": "geo_polygon_get_length",
+      "args": "geo_polygon_type *polygon"
+    }
+  ],
+  "ert\\geometry\\geo_polygon_collection.hpp": [
+    {
+      "ret": "void",
+      "name": "geo_polygon_collection_free",
+      "args": "geo_polygon_collection_type *polygons"
+    },
+    {
+      "ret": "int",
+      "name": "geo_polygon_collection_size",
+      "args": "const geo_polygon_collection_type *polygons"
+    }
+  ],
+  "ert\\geometry\\geo_region.hpp": [
+    {
+      "ret": "void",
+      "name": "geo_region_free",
+      "args": "geo_region_type *region"
+    },
+    {
+      "ret": "void",
+      "name": "geo_region_reset",
+      "args": "geo_region_type *region"
+    }
+  ],
+  "ert\\geometry\\geo_surface.hpp": [
+    {
+      "ret": "void",
+      "name": "geo_surface_free",
+      "args": "geo_surface_type *geo_surface"
+    },
+    {
+      "ret": "double",
+      "name": "geo_surface_iget_zvalue",
+      "args": "const geo_surface_type *surface, int index"
+    },
+    {
+      "ret": "int",
+      "name": "geo_surface_get_size",
+      "args": "const geo_surface_type *surface"
+    },
+    {
+      "ret": "int",
+      "name": "geo_surface_get_nx",
+      "args": "const geo_surface_type *surface"
+    },
+    {
+      "ret": "int",
+      "name": "geo_surface_get_ny",
+      "args": "const geo_surface_type *surface"
+    },
+    {
+      "ret": "void",
+      "name": "geo_surface_shift",
+      "args": "const geo_surface_type *src, double value"
+    },
+    {
+      "ret": "void",
+      "name": "geo_surface_scale",
+      "args": "const geo_surface_type *src, double value"
+    },
+    {
+      "ret": "void",
+      "name": "geo_surface_isub",
+      "args": "geo_surface_type *self, const geo_surface_type *other"
+    },
+    {
+      "ret": "void",
+      "name": "geo_surface_assign_value",
+      "args": "const geo_surface_type *src, double value"
+    },
+    {
+      "ret": "void",
+      "name": "geo_surface_iadd",
+      "args": "geo_surface_type *self, const geo_surface_type *other"
+    },
+    {
+      "ret": "void",
+      "name": "geo_surface_imul",
+      "args": "geo_surface_type *self, const geo_surface_type *other"
+    },
+    {
+      "ret": "void",
+      "name": "geo_surface_isqrt",
+      "args": "geo_surface_type *surface"
+    }
+  ],
+  "ert\\util\\hash.hpp": [
+    {
+      "ret": "void",
+      "name": "hash_free",
+      "args": "hash_type *"
+    },
+    {
+      "ret": "void",
+      "name": "hash_insert_ref",
+      "args": "hash_type *, const char *, const void *"
+    },
+    {
+      "ret": "void",
+      "name": "hash_insert_string",
+      "args": "hash_type *, const char *, const char *"
+    },
+    {
+      "ret": "bool",
+      "name": "hash_has_key",
+      "args": "const hash_type *, const char *"
+    },
+    {
+      "ret": "int",
+      "name": "hash_get_size",
+      "args": "const hash_type *"
+    },
+    {
+      "ret": "void",
+      "name": "hash_resize",
+      "args": "hash_type *hash, int new_size"
+    },
+    {
+      "ret": "void",
+      "name": "hash_insert_int",
+      "args": "hash_type *, const char *, int"
+    },
+    {
+      "ret": "int",
+      "name": "hash_get_int",
+      "args": "const hash_type *, const char *"
+    },
+    {
+      "ret": "void",
+      "name": "hash_insert_double",
+      "args": "hash_type *, const char *, double"
+    },
+    {
+      "ret": "double",
+      "name": "hash_get_double",
+      "args": "const hash_type *, const char *"
+    }
+  ],
+  "ert\\util\\hash_node.hpp": [
+    {
+      "ret": "bool",
+      "name": "hash_node_key_eq",
+      "args": "const hash_node_type *, uint32_t, const char *"
+    },
+    {
+      "ret": "void",
+      "name": "hash_node_set_next",
+      "args": "hash_node_type *, const hash_node_type *"
+    },
+    {
+      "ret": "uint32_t",
+      "name": "hash_node_get_table_index",
+      "args": "const hash_node_type *"
+    },
+    {
+      "ret": "void",
+      "name": "hash_node_free",
+      "args": "hash_node_type *"
+    },
+    {
+      "ret": "uint32_t",
+      "name": "hash_node_set_table_index",
+      "args": "hash_node_type *, uint32_t"
+    }
+  ],
+  "ert\\util\\hash_sll.hpp": [
+    {
+      "ret": "void",
+      "name": "hash_sll_del_node",
+      "args": "hash_sll_type *, hash_node_type *"
+    },
+    {
+      "ret": "void",
+      "name": "hash_sll_add_node",
+      "args": "hash_sll_type *, hash_node_type *"
+    },
+    {
+      "ret": "void",
+      "name": "hash_sll_free",
+      "args": "hash_sll_type *"
+    },
+    {
+      "ret": "bool",
+      "name": "hash_sll_empty",
+      "args": "const hash_sll_type *hash_sll"
+    }
+  ],
+  "ert\\util\\lookup_table.hpp": [
+    {
+      "ret": "void",
+      "name": "lookup_table_append",
+      "args": "lookup_table_type *lt, double x, double y"
+    },
+    {
+      "ret": "void",
+      "name": "lookup_table_free",
+      "args": "lookup_table_type *lt"
+    },
+    {
+      "ret": "double",
+      "name": "lookup_table_interp",
+      "args": "lookup_table_type *lt, double x"
+    },
+    {
+      "ret": "double",
+      "name": "lookup_table_get_max_value",
+      "args": "lookup_table_type *lookup_table"
+    },
+    {
+      "ret": "double",
+      "name": "lookup_table_get_min_value",
+      "args": "lookup_table_type *lookup_table"
+    },
+    {
+      "ret": "double",
+      "name": "lookup_table_get_max_arg",
+      "args": "lookup_table_type *lookup_table"
+    },
+    {
+      "ret": "double",
+      "name": "lookup_table_get_min_arg",
+      "args": "lookup_table_type *lookup_table"
+    },
+    {
+      "ret": "int",
+      "name": "lookup_table_get_size",
+      "args": "const lookup_table_type *lt"
+    },
+    {
+      "ret": "void",
+      "name": "lookup_table_set_low_limit",
+      "args": "lookup_table_type *lt, double limit"
+    },
+    {
+      "ret": "bool",
+      "name": "lookup_table_has_low_limit",
+      "args": "const lookup_table_type *lt"
+    },
+    {
+      "ret": "void",
+      "name": "lookup_table_set_high_limit",
+      "args": "lookup_table_type *lt, double limit"
+    },
+    {
+      "ret": "bool",
+      "name": "lookup_table_has_high_limit",
+      "args": "const lookup_table_type *lt"
+    }
+  ],
+  "ert\\util\\mzran.hpp": [
+    {
+      "ret": "void",
+      "name": "mzran_fscanf_state",
+      "args": "void *__rng, FILE *stream"
+    },
+    {
+      "ret": "unsigned int",
+      "name": "mzran_forward",
+      "args": "void *__rng"
+    },
+    {
+      "ret": "void",
+      "name": "mzran_set_state",
+      "args": "void *__rng, const char *seed_buffer"
+    },
+    {
+      "ret": "void",
+      "name": "mzran_get_state",
+      "args": "void *__rng, char *state_buffer"
+    },
+    {
+      "ret": "double",
+      "name": "mzran_get_double",
+      "args": "mzran_type *rng"
+    },
+    {
+      "ret": "int",
+      "name": "mzran_get_int",
+      "args": "mzran_type *rng, int max"
+    },
+    {
+      "ret": "void",
+      "name": "mzran_fprintf_state",
+      "args": "const void *__rng, FILE *stream"
+    },
+    {
+      "ret": "void",
+      "name": "mzran_free",
+      "args": "void *__rng"
+    }
+  ],
+  "ert\\util\\node_data.hpp": [
+    {
+      "ret": "void",
+      "name": "node_data_free",
+      "args": "node_data_type *"
+    },
+    {
+      "ret": "void",
+      "name": "node_data_free_container",
+      "args": "node_data_type *"
+    },
+    {
+      "ret": "int",
+      "name": "node_data_get_int",
+      "args": "const node_data_type *"
+    },
+    {
+      "ret": "double",
+      "name": "node_data_get_double",
+      "args": "const node_data_type *"
+    }
+  ],
+  "ert\\util\\parser.hpp": [
+    {
+      "ret": "void",
+      "name": "basic_parser_free",
+      "args": "basic_parser_type *parser"
+    }
+  ],
+  "ert\\util\\path_stack.hpp": [
+    {
+      "ret": "void",
+      "name": "path_stack_pop",
+      "args": "path_stack_type *path_stack"
+    },
+    {
+      "ret": "void",
+      "name": "path_stack_push_cwd",
+      "args": "path_stack_type *path_stack"
+    },
+    {
+      "ret": "bool",
+      "name": "path_stack_push",
+      "args": "path_stack_type *path_stack, const char *path"
+    },
+    {
+      "ret": "void",
+      "name": "path_stack_free",
+      "args": "path_stack_type *path_stack"
+    },
+    {
+      "ret": "int",
+      "name": "path_stack_size",
+      "args": "const path_stack_type *path_stack"
+    }
+  ],
+  "ert\\util\\perm_vector.hpp": [
+    {
+      "ret": "void",
+      "name": "perm_vector_free",
+      "args": "perm_vector_type *perm_vector"
+    },
+    {
+      "ret": "int",
+      "name": "perm_vector_get_size",
+      "args": "const perm_vector_type *perm"
+    },
+    {
+      "ret": "int",
+      "name": "perm_vector_iget",
+      "args": "const perm_vector_type *perm, int index"
+    }
+  ],
+  "ert\\util\\rd_version.hpp": [
+    {
+      "ret": "int",
+      "name": "rd_version_get_major_version",
+      "args": ""
+    },
+    {
+      "ret": "int",
+      "name": "rd_version_get_minor_version",
+      "args": ""
+    },
+    {
+      "ret": "bool",
+      "name": "rd_version_is_ert_devel_version",
+      "args": ""
+    }
+  ],
+  "ert\\util\\rng.hpp": [
+    {
+      "ret": "void",
+      "name": "rng_free",
+      "args": "rng_type *rng"
+    },
+    {
+      "ret": "unsigned int",
+      "name": "rng_forward",
+      "args": "rng_type *rng"
+    },
+    {
+      "ret": "double",
+      "name": "rng_get_double",
+      "args": "rng_type *rng"
+    },
+    {
+      "ret": "void",
+      "name": "rng_init",
+      "args": "rng_type *rng, rng_init_mode init_mode"
+    },
+    {
+      "ret": "int",
+      "name": "rng_state_size",
+      "args": "const rng_type *rng"
+    },
+    {
+      "ret": "void",
+      "name": "rng_save_state",
+      "args": "rng_type *rng, const char *filename"
+    },
+    {
+      "ret": "void",
+      "name": "rng_load_state",
+      "args": "rng_type *rng, const char *filename"
+    },
+    {
+      "ret": "void",
+      "name": "rng_set_state",
+      "args": "rng_type *rng, const char *state"
+    },
+    {
+      "ret": "void",
+      "name": "rng_get_state",
+      "args": "const rng_type *rng, char *state"
+    },
+    {
+      "ret": "int",
+      "name": "rng_get_int",
+      "args": "rng_type *rng, int max_value"
+    },
+    {
+      "ret": "unsigned int",
+      "name": "rng_get_max_int",
+      "args": "const rng_type *rng"
+    }
+  ],
+  "ert\\util\\stringlist.hpp": [
+    {
+      "ret": "void",
+      "name": "stringlist_free",
+      "args": "stringlist_type *"
+    },
+    {
+      "ret": "void",
+      "name": "stringlist_clear",
+      "args": "stringlist_type *"
+    },
+    {
+      "ret": "void",
+      "name": "stringlist_append_copy",
+      "args": "stringlist_type *, const char *"
+    },
+    {
+      "ret": "void",
+      "name": "stringlist_iset_copy",
+      "args": "stringlist_type *, int index, const char *"
+    },
+    {
+      "ret": "int",
+      "name": "stringlist_get_size",
+      "args": "const stringlist_type *"
+    },
+    {
+      "ret": "bool",
+      "name": "stringlist_equal",
+      "args": "const stringlist_type *, const stringlist_type *"
+    },
+    {
+      "ret": "bool",
+      "name": "stringlist_contains",
+      "args": "const stringlist_type *, const char *"
+    },
+    {
+      "ret": "int",
+      "name": "stringlist_find_first",
+      "args": "const stringlist_type *, const char *"
+    },
+    {
+      "ret": "void",
+      "name": "stringlist_sort",
+      "args": "stringlist_type *, string_cmp_ftype *string_cmp"
+    },
+    {
+      "ret": "void",
+      "name": "stringlist_reverse",
+      "args": "stringlist_type *s"
+    },
+    {
+      "ret": "void",
+      "name": "stringlist_python_sort",
+      "args": "stringlist_type *s, int cmp_flag"
+    }
+  ],
+  "ert\\util\\test_util.hpp": [
+    {
+      "ret": "bool",
+      "name": "test_check_string_equal",
+      "args": "const char *s1, const char *s2"
+    },
+    {
+      "ret": "void",
+      "name": "test_assert_int_equal__",
+      "args": "int i1, int i2, const char *file, int line"
+    },
+    {
+      "ret": "void",
+      "name": "test_assert_int_not_equal__",
+      "args": "int i1, int i2, const char *file, int line"
+    },
+    {
+      "ret": "void",
+      "name": "test_assert_long_equal__",
+      "args": "long i1, long i2, const char *file, long line"
+    },
+    {
+      "ret": "bool",
+      "name": "test_check_double_equal",
+      "args": "double d1, double d2"
+    },
+    {
+      "ret": "void",
+      "name": "test_assert_float_equal__",
+      "args": "float d1, float d2, const char *file, int line"
+    },
+    {
+      "ret": "bool",
+      "name": "test_check_float_equal",
+      "args": "float d1, float d2"
+    },
+    {
+      "ret": "void",
+      "name": "test_assert_bool_equal__",
+      "args": "bool b1, bool b2, const char *file, int line"
+    },
+    {
+      "ret": "void",
+      "name": "test_assert_bool_not_equal__",
+      "args": "bool b1, bool b2, const char *file, int line"
+    },
+    {
+      "ret": "void",
+      "name": "test_assert_true__",
+      "args": "bool value, const char *file, int line"
+    },
+    {
+      "ret": "void",
+      "name": "test_assert_false__",
+      "args": "bool value, const char *file, int line"
+    },
+    {
+      "ret": "void",
+      "name": "test_assert_NULL__",
+      "args": "const void *p, const char *file, int line"
+    },
+    {
+      "ret": "void",
+      "name": "test_assert_not_NULL__",
+      "args": "const void *p, const char *file, int line"
+    },
+    {
+      "ret": "void",
+      "name": "test_install_SIGNALS",
+      "args": "void"
+    }
+  ],
+  "ert\\util\\test_work_area.hpp": [
+    {
+      "ret": "void",
+      "name": "test_work_area_free",
+      "args": "test_work_area_type *work_area"
+    }
+  ],
+  "ert\\util\\util.hpp": [
+    {
+      "ret": "time_t",
+      "name": "util_make_datetime_utc",
+      "args": "int, int, int, int, int, int"
+    },
+    {
+      "ret": "time_t",
+      "name": "util_make_date_utc",
+      "args": "int, int, int"
+    },
+    {
+      "ret": "void",
+      "name": "util_inplace_forward_seconds_utc",
+      "args": "time_t *t, double seconds"
+    },
+    {
+      "ret": "void",
+      "name": "util_inplace_forward_days_utc",
+      "args": "time_t *t, double days"
+    },
+    {
+      "ret": "double",
+      "name": "util_difftime",
+      "args": "time_t, time_t, int *, int *, int *, int *"
+    },
+    {
+      "ret": "double",
+      "name": "util_difftime_days",
+      "args": "time_t, time_t"
+    },
+    {
+      "ret": "double",
+      "name": "util_difftime_seconds",
+      "args": "time_t start_time, time_t end_time"
+    },
+    {
+      "ret": "bool",
+      "name": "util_sscanf_isodate",
+      "args": "const char *, time_t *"
+    },
+    {
+      "ret": "bool",
+      "name": "util_entry_exists",
+      "args": "const char *entry"
+    },
+    {
+      "ret": "bool",
+      "name": "util_file_exists",
+      "args": "const char *"
+    },
+    {
+      "ret": "bool",
+      "name": "util_is_abs_path",
+      "args": "const char *"
+    },
+    {
+      "ret": "bool",
+      "name": "util_fmt_bit8",
+      "args": "const char *"
+    },
+    {
+      "ret": "bool",
+      "name": "util_mkdir_p",
+      "args": "const char *"
+    },
+    {
+      "ret": "void",
+      "name": "util_make_path",
+      "args": "const char *"
+    },
+    {
+      "ret": "double",
+      "name": "util_file_difftime",
+      "args": "const char *, const char *"
+    },
+    {
+      "ret": "size_t",
+      "name": "util_file_size",
+      "args": "const char *"
+    },
+    {
+      "ret": "size_t",
+      "name": "util_fd_size",
+      "args": "int fd"
+    },
+    {
+      "ret": "void",
+      "name": "util_clear_directory",
+      "args": "const char *path, bool strict_uid, bool unlink_root"
+    },
+    {
+      "ret": "void",
+      "name": "util_strupr",
+      "args": "char *"
+    },
+    {
+      "ret": "bool",
+      "name": "util_string_equal",
+      "args": "const char *s1, const char *s2"
+    },
+    {
+      "ret": "bool",
+      "name": "util_copy_file",
+      "args": "const char *, const char *"
+    },
+    {
+      "ret": "bool",
+      "name": "util_is_cwd",
+      "args": "const char *path"
+    },
+    {
+      "ret": "bool",
+      "name": "util_ftruncate",
+      "args": "FILE *stream, long size"
+    },
+    {
+      "ret": "int",
+      "name": "util_roundf",
+      "args": "float x"
+    },
+    {
+      "ret": "int",
+      "name": "util_round",
+      "args": "double x"
+    },
+    {
+      "ret": "offset_type",
+      "name": "util_ftell",
+      "args": "FILE *stream"
+    },
+    {
+      "ret": "int",
+      "name": "util_fseek",
+      "args": "FILE *stream, offset_type offset, int whence"
+    },
+    {
+      "ret": "void",
+      "name": "util_rewind",
+      "args": "FILE *stream"
+    },
+    {
+      "ret": "int",
+      "name": "util_stat",
+      "args": "const char *filename, stat_type *stat_info"
+    },
+    {
+      "ret": "int",
+      "name": "util_fstat",
+      "args": "int fileno, stat_type *stat_info"
+    },
+    {
+      "ret": "void",
+      "name": "util_copy_directory_content",
+      "args": "const char *src_path, const char *target_path"
+    },
+    {
+      "ret": "void",
+      "name": "util_copy_directory",
+      "args": "const char *, const char *"
+    },
+    {
+      "ret": "int",
+      "name": "util_forward_line",
+      "args": "FILE *, bool *"
+    },
+    {
+      "ret": "void",
+      "name": "util_rewind_line",
+      "args": "FILE *"
+    },
+    {
+      "ret": "bool",
+      "name": "util_fopen_test",
+      "args": "const char *, const char *"
+    },
+    {
+      "ret": "void",
+      "name": "util_alloc_file_components",
+      "args": "const char *, char **, char **, char **"
+    },
+    {
+      "ret": "bool",
+      "name": "util_sscanf_bool",
+      "args": "const char *, bool *"
+    },
+    {
+      "ret": "int",
+      "name": "util_strcmp_int",
+      "args": "const char *s1, const char *s2"
+    },
+    {
+      "ret": "int",
+      "name": "util_strcmp_float",
+      "args": "const char *s1, const char *s2"
+    },
+    {
+      "ret": "bool",
+      "name": "util_sscanf_int",
+      "args": "const char *, int *"
+    },
+    {
+      "ret": "bool",
+      "name": "util_sscanf_double",
+      "args": "const char *, double *"
+    },
+    {
+      "ret": "void",
+      "name": "util_path_split",
+      "args": "const char *line, int *_tokens, char ***_token_list"
+    },
+    {
+      "ret": "int",
+      "name": "util_string_replace_inplace",
+      "args": "char **, const char *, const char *"
+    },
+    {
+      "ret": "void",
+      "name": "util_free_stringlist",
+      "args": "char **, int"
+    },
+    {
+      "ret": "bool",
+      "name": "util_is_directory",
+      "args": "const char *"
+    },
+    {
+      "ret": "bool",
+      "name": "util_is_file",
+      "args": "const char *"
+    },
+    {
+      "ret": "void",
+      "name": "util_set_date_values_utc",
+      "args": "time_t, int *, int *, int *"
+    },
+    {
+      "ret": "unsigned int",
+      "name": "util_clock_seed",
+      "args": "void"
+    },
+    {
+      "ret": "void",
+      "name": "util_fread_dev_random",
+      "args": "int, char *"
+    },
+    {
+      "ret": "void",
+      "name": "util_fread_dev_urandom",
+      "args": "int, char *"
+    },
+    {
+      "ret": "void",
+      "name": "util_abort_test_set_intercept_function",
+      "args": "const char *"
+    },
+    {
+      "ret": "void",
+      "name": "util_install_signals",
+      "args": "void"
+    },
+    {
+      "ret": "void",
+      "name": "util_update_signals",
+      "args": "void"
+    },
+    {
+      "ret": "void",
+      "name": "util_fwrite_string",
+      "args": "const char *, FILE *"
+    },
+    {
+      "ret": "void",
+      "name": "util_endian_flip_vector",
+      "args": "void *data, int element_size, int elements"
+    },
+    {
+      "ret": "void",
+      "name": "util_double_vector_max_min",
+      "args": "int, const double *, double *, double *"
+    },
+    {
+      "ret": "void",
+      "name": "util_update_double_max_min",
+      "args": "double, double *, double *"
+    },
+    {
+      "ret": "void",
+      "name": "util_update_float_max_min",
+      "args": "float, float *, float *"
+    },
+    {
+      "ret": "void",
+      "name": "util_update_int_max_min",
+      "args": "int, int *, int *"
+    },
+    {
+      "ret": "int",
+      "name": "util_int_max",
+      "args": "int, int"
+    },
+    {
+      "ret": "double",
+      "name": "util_double_max",
+      "args": "double, double"
+    },
+    {
+      "ret": "float",
+      "name": "util_float_max",
+      "args": "float, float"
+    },
+    {
+      "ret": "int",
+      "name": "util_int_min",
+      "args": "int, int"
+    },
+    {
+      "ret": "size_t",
+      "name": "util_size_t_min",
+      "args": "size_t a, size_t b"
+    },
+    {
+      "ret": "size_t",
+      "name": "util_size_t_max",
+      "args": "size_t a, size_t b"
+    },
+    {
+      "ret": "double",
+      "name": "util_double_min",
+      "args": "double, double"
+    },
+    {
+      "ret": "float",
+      "name": "util_float_min",
+      "args": "float, float"
+    },
+    {
+      "ret": "void",
+      "name": "util_fskip_lines",
+      "args": "FILE *, int"
+    },
+    {
+      "ret": "bool",
+      "name": "util_same_file",
+      "args": "const char *, const char *"
+    },
+    {
+      "ret": "void",
+      "name": "util_fread",
+      "args": "void *, size_t, size_t, FILE *, const char *"
+    },
+    {
+      "ret": "void",
+      "name": "util_fwrite",
+      "args": "const void *, size_t, size_t, FILE *, const char *"
+    },
+    {
+      "ret": "int",
+      "name": "util_fread_int",
+      "args": "FILE *"
+    },
+    {
+      "ret": "void",
+      "name": "util_fwrite_offset",
+      "args": "offset_type, FILE *"
+    },
+    {
+      "ret": "void",
+      "name": "util_fwrite_size_t",
+      "args": "size_t, FILE *"
+    },
+    {
+      "ret": "void",
+      "name": "util_fwrite_int",
+      "args": "int, FILE *"
+    },
+    {
+      "ret": "int",
+      "name": "util_get_current_linenr",
+      "args": "FILE *stream"
+    },
+    {
+      "ret": "bool",
+      "name": "util_files_equal",
+      "args": "const char *file1, const char *file2"
+    },
+    {
+      "ret": "double",
+      "name": "util_kahan_sum",
+      "args": "const double *data, size_t N"
+    },
+    {
+      "ret": "bool",
+      "name": "util_double_approx_equal",
+      "args": "double d1, double d2"
+    },
+    {
+      "ret": "int",
+      "name": "util_fnmatch",
+      "args": "const char *pattern, const char *string"
+    },
+    {
+      "ret": "void",
+      "name": "util_time_utc",
+      "args": "time_t *t, struct tm *ts"
+    },
+    {
+      "ret": "int",
+      "name": "util_chdir",
+      "args": "const char *path"
+    },
+    {
+      "ret": "bool",
+      "name": "util_access",
+      "args": "const char *entry, mode_t mode"
+    },
+    {
+      "ret": "bool",
+      "name": "util_access",
+      "args": "const char *entry, int mode"
+    },
+    {
+      "ret": "void",
+      "name": "util_set_abort_handler",
+      "args": "util_abort_handler_t *"
+    },
+    {
+      "ret": "void",
+      "name": "util_abort_signal",
+      "args": "int"
+    }
+  ],
+  "ert\\util\\util_unlink.hpp": [
+    {
+      "ret": "int",
+      "name": "util_unlink",
+      "args": "const char *filename"
+    }
+  ],
+  "ert\\util\\vector.hpp": [
+    {
+      "ret": "int",
+      "name": "vector_append_ref",
+      "args": "vector_type *, const void *"
+    },
+    {
+      "ret": "int",
+      "name": "vector_append_owned_ref",
+      "args": "vector_type *, const void *, free_ftype *del"
+    },
+    {
+      "ret": "void",
+      "name": "vector_iset_ref",
+      "args": "vector_type *, int, const void *"
+    },
+    {
+      "ret": "void",
+      "name": "vector_iset_owned_ref",
+      "args": "vector_type *, int, const void *, free_ftype *del"
+    },
+    {
+      "ret": "void",
+      "name": "vector_clear",
+      "args": "vector_type *vector"
+    },
+    {
+      "ret": "void",
+      "name": "vector_free",
+      "args": "vector_type *"
+    },
+    {
+      "ret": "void",
+      "name": "vector_free__",
+      "args": "void *arg"
+    },
+    {
+      "ret": "void",
+      "name": "vector_append_buffer",
+      "args": "vector_type *, const void *, int"
+    },
+    {
+      "ret": "void",
+      "name": "vector_idel",
+      "args": "vector_type *vector, int index"
+    },
+    {
+      "ret": "void",
+      "name": "vector_shrink",
+      "args": "vector_type *vector, int new_size"
+    },
+    {
+      "ret": "int",
+      "name": "vector_get_size",
+      "args": "const vector_type *"
+    },
+    {
+      "ret": "void",
+      "name": "vector_sort",
+      "args": "vector_type *vector, vector_cmp_ftype *cmp"
+    },
+    {
+      "ret": "void",
+      "name": "vector_permute",
+      "args": "vector_type *vector, const int_vector_type *perm_vector"
+    },
+    {
+      "ret": "void",
+      "name": "vector_inplace_reverse",
+      "args": "vector_type *vector"
+    }
+  ],
+  "resdata\\fault_block.hpp": [
+    {
+      "ret": "void",
+      "name": "fault_block_free__",
+      "args": "void *arg"
+    },
+    {
+      "ret": "int",
+      "name": "fault_block_get_size",
+      "args": "const fault_block_type *block"
+    },
+    {
+      "ret": "double",
+      "name": "fault_block_get_xc",
+      "args": "fault_block_type *fault_block"
+    },
+    {
+      "ret": "double",
+      "name": "fault_block_get_yc",
+      "args": "fault_block_type *fault_block"
+    },
+    {
+      "ret": "int",
+      "name": "fault_block_get_id",
+      "args": "const fault_block_type *block"
+    },
+    {
+      "ret": "void",
+      "name": "fault_block_assign_to_region",
+      "args": "fault_block_type *fault_block, int region_id"
+    },
+    {
+      "ret": "void",
+      "name": "fault_block_add_cell",
+      "args": "fault_block_type *fault_block, int i, int j"
+    }
+  ],
+  "resdata\\fault_block_layer.hpp": [
+    {
+      "ret": "void",
+      "name": "fault_block_layer_free",
+      "args": "fault_block_layer_type *layer"
+    },
+    {
+      "ret": "void",
+      "name": "fault_block_layer_del_block",
+      "args": "fault_block_layer_type *layer, int block_id"
+    },
+    {
+      "ret": "int",
+      "name": "fault_block_layer_get_max_id",
+      "args": "const fault_block_layer_type *layer"
+    },
+    {
+      "ret": "int",
+      "name": "fault_block_layer_get_next_id",
+      "args": "const fault_block_layer_type *layer"
+    },
+    {
+      "ret": "int",
+      "name": "fault_block_layer_get_size",
+      "args": "const fault_block_layer_type *layer"
+    },
+    {
+      "ret": "int",
+      "name": "fault_block_layer_get_k",
+      "args": "const fault_block_layer_type *layer"
+    }
+  ],
+  "resdata\\layer.hpp": [
+    {
+      "ret": "bool",
+      "name": "layer_iget_left_barrier",
+      "args": "const layer_type *layer, int i, int j"
+    },
+    {
+      "ret": "bool",
+      "name": "layer_iget_bottom_barrier",
+      "args": "const layer_type *layer, int i, int j"
+    },
+    {
+      "ret": "int",
+      "name": "layer_get_nx",
+      "args": "const layer_type *layer"
+    },
+    {
+      "ret": "int",
+      "name": "layer_get_ny",
+      "args": "const layer_type *layer"
+    },
+    {
+      "ret": "void",
+      "name": "layer_free",
+      "args": "layer_type *layer"
+    },
+    {
+      "ret": "int",
+      "name": "layer_replace_cell_values",
+      "args": "layer_type *layer, int old_value, int new_value"
+    },
+    {
+      "ret": "bool",
+      "name": "layer_iget_active",
+      "args": "const layer_type *layer, int i, int j"
+    },
+    {
+      "ret": "int",
+      "name": "layer_iget_cell_value",
+      "args": "const layer_type *layer, int i, int j"
+    },
+    {
+      "ret": "void",
+      "name": "layer_iset_cell_value",
+      "args": "layer_type *layer, int i, int j, int value"
+    },
+    {
+      "ret": "bool",
+      "name": "layer_cell_on_edge",
+      "args": "const layer_type *layer, int i, int j"
+    },
+    {
+      "ret": "int",
+      "name": "layer_get_cell_sum",
+      "args": "const layer_type *layer"
+    },
+    {
+      "ret": "void",
+      "name": "layer_add_interp_barrier",
+      "args": "layer_type *layer, int c1, int c2"
+    },
+    {
+      "ret": "void",
+      "name": "layer_add_ijbarrier",
+      "args": "layer_type *layer, int i1, int j1, int i2, int j2"
+    },
+    {
+      "ret": "void",
+      "name": "layer_add_barrier",
+      "args": "layer_type *layer, int c1, int c2"
+    },
+    {
+      "ret": "void",
+      "name": "layer_memcpy",
+      "args": "layer_type *target_layer, const layer_type *src_layer"
+    },
+    {
+      "ret": "void",
+      "name": "layer_update_active",
+      "args": "layer_type *layer, const rd_grid_type *grid, int k"
+    },
+    {
+      "ret": "void",
+      "name": "layer_clear_cells",
+      "args": "layer_type *layer"
+    },
+    {
+      "ret": "void",
+      "name": "layer_assign",
+      "args": "layer_type *layer, int value"
+    },
+    {
+      "ret": "int",
+      "name": "layer_count_equal",
+      "args": "const layer_type *layer, int value"
+    }
+  ],
+  "resdata\\nnc_info.hpp": [
+    {
+      "ret": "void",
+      "name": "nnc_info_free",
+      "args": "nnc_info_type *nnc_info"
+    },
+    {
+      "ret": "int",
+      "name": "nnc_info_get_lgr_nr",
+      "args": "const nnc_info_type *nnc_info"
+    },
+    {
+      "ret": "int",
+      "name": "nnc_info_get_size",
+      "args": "const nnc_info_type *nnc_info"
+    },
+    {
+      "ret": "int",
+      "name": "nnc_info_get_total_size",
+      "args": "const nnc_info_type *nnc_info"
+    },
+    {
+      "ret": "bool",
+      "name": "nnc_info_has_grid_index_list",
+      "args": "const nnc_info_type *nnc_info, int lgr_nr"
+    }
+  ],
+  "resdata\\nnc_vector.hpp": [
+    {
+      "ret": "int",
+      "name": "nnc_vector_iget_nnc_index",
+      "args": "const nnc_vector_type *nnc_vector, int index"
+    },
+    {
+      "ret": "int",
+      "name": "nnc_vector_iget_grid_index",
+      "args": "const nnc_vector_type *nnc_vector, int index"
+    },
+    {
+      "ret": "void",
+      "name": "nnc_vector_free",
+      "args": "nnc_vector_type *nnc_vector"
+    },
+    {
+      "ret": "int",
+      "name": "nnc_vector_get_lgr_nr",
+      "args": "const nnc_vector_type *nnc_vector"
+    },
+    {
+      "ret": "void",
+      "name": "nnc_vector_free__",
+      "args": "void *arg"
+    },
+    {
+      "ret": "int",
+      "name": "nnc_vector_get_size",
+      "args": "const nnc_vector_type *nnc_vector"
+    }
+  ],
+  "resdata\\rd_coarse_cell.hpp": [
+    {
+      "ret": "void",
+      "name": "rd_coarse_cell_free",
+      "args": "rd_coarse_cell_type *coarse_cell"
+    },
+    {
+      "ret": "void",
+      "name": "rd_coarse_cell_free__",
+      "args": "void *arg"
+    },
+    {
+      "ret": "int",
+      "name": "rd_coarse_cell_get_size",
+      "args": "const rd_coarse_cell_type *coarse_cell"
+    },
+    {
+      "ret": "void",
+      "name": "rd_coarse_cell_reset_active_index",
+      "args": "rd_coarse_cell_type *coarse_cell"
+    },
+    {
+      "ret": "int",
+      "name": "rd_coarse_cell_get_active_index",
+      "args": "const rd_coarse_cell_type *coarse_cell"
+    },
+    {
+      "ret": "int",
+      "name": "rd_coarse_cell_get_num_active",
+      "args": "const rd_coarse_cell_type *coarse_cell"
+    }
+  ],
+  "resdata\\rd_file.hpp": [
+    {
+      "ret": "bool",
+      "name": "rd_file_load_all",
+      "args": "rd_file_type *rd_file"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_file_index_valid",
+      "args": "const char *file_name, const char *index_file_name"
+    },
+    {
+      "ret": "void",
+      "name": "rd_file_close",
+      "args": "rd_file_type *rd_file"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_file_has_kw",
+      "args": "const rd_file_type *rd_file, const char *kw"
+    },
+    {
+      "ret": "int",
+      "name": "rd_file_get_num_named_kw",
+      "args": "const rd_file_type *rd_file, const char *kw"
+    },
+    {
+      "ret": "int",
+      "name": "rd_file_get_size",
+      "args": "const rd_file_type *rd_file"
+    },
+    {
+      "ret": "rd_version_enum",
+      "name": "rd_file_get_rd_version",
+      "args": "const rd_file_type *file"
+    },
+    {
+      "ret": "int",
+      "name": "rd_file_get_phases",
+      "args": "const rd_file_type *init_file"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_file_writable",
+      "args": "const rd_file_type *rd_file"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_file_flags_set",
+      "args": "const rd_file_type *rd_file, int flags"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_file_save_kw",
+      "args": "const rd_file_type *rd_file, const rd_kw_type *rd_kw"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_file_has_report_step",
+      "args": "const rd_file_type *rd_file, int report_step"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_file_has_sim_time",
+      "args": "const rd_file_type *rd_file, time_t sim_time"
+    }
+  ],
+  "resdata\\rd_file_kw.hpp": [
+    {
+      "ret": "void",
+      "name": "inv_map_free",
+      "args": "inv_map_type *map"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_file_kw_equal",
+      "args": "const rd_file_kw_type *kw1, const rd_file_kw_type *kw2"
+    },
+    {
+      "ret": "void",
+      "name": "rd_file_kw_free",
+      "args": "rd_file_kw_type *file_kw"
+    },
+    {
+      "ret": "int",
+      "name": "rd_file_kw_get_size",
+      "args": "const rd_file_kw_type *file_kw"
+    },
+    {
+      "ret": "rd_data_type",
+      "name": "rd_file_kw_get_data_type",
+      "args": "const rd_file_kw_type *"
+    },
+    {
+      "ret": "offset_type",
+      "name": "rd_file_kw_get_offset",
+      "args": "const rd_file_kw_type *file_kw"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_file_kw_fskip_data",
+      "args": "const rd_file_kw_type *file_kw, fortio_type *fortio"
+    },
+    {
+      "ret": "void",
+      "name": "rd_file_kw_inplace_fwrite",
+      "args": "rd_file_kw_type *file_kw, fortio_type *fortio"
+    },
+    {
+      "ret": "void",
+      "name": "rd_file_kw_fwrite",
+      "args": "const rd_file_kw_type *file_kw, FILE *stream"
+    },
+    {
+      "ret": "void",
+      "name": "rd_file_kw_end_transaction",
+      "args": "rd_file_kw_type *file_kw, int ref_count"
+    }
+  ],
+  "resdata\\rd_file_view.hpp": [
+    {
+      "ret": "bool",
+      "name": "rd_file_view_check_flags",
+      "args": "int state_flags, int query_flags"
+    },
+    {
+      "ret": "void",
+      "name": "rd_file_view_make_index",
+      "args": "rd_file_view_type *rd_file_view"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_file_view_has_kw",
+      "args": "const rd_file_view_type *rd_file_view, const char *kw"
+    },
+    {
+      "ret": "int",
+      "name": "rd_file_view_get_num_distinct_kw",
+      "args": "const rd_file_view_type *rd_file_view"
+    },
+    {
+      "ret": "int",
+      "name": "rd_file_view_get_size",
+      "args": "const rd_file_view_type *rd_file_view"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_file_view_load_all",
+      "args": "rd_file_view_type *rd_file_view"
+    },
+    {
+      "ret": "void",
+      "name": "rd_file_view_free",
+      "args": "rd_file_view_type *rd_file_view"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_file_view_drop_flag",
+      "args": "rd_file_view_type *file_view, int flag"
+    },
+    {
+      "ret": "void",
+      "name": "rd_file_view_add_flag",
+      "args": "rd_file_view_type *file_view, int flag"
+    },
+    {
+      "ret": "void",
+      "name": "rd_file_view_fclose_stream",
+      "args": "rd_file_view_type *file_view"
+    }
+  ],
+  "resdata\\rd_grav.hpp": [
+    {
+      "ret": "void",
+      "name": "rd_grav_free",
+      "args": "rd_grav_type *rd_grav_config"
+    }
+  ],
+  "resdata\\rd_grid.hpp": [
+    {
+      "ret": "bool",
+      "name": "rd_grid_have_coarse_cells",
+      "args": "const rd_grid_type *main_grid"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_num_coarse_groups",
+      "args": "const rd_grid_type *main_grid"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_cell_dx1A",
+      "args": "const rd_grid_type *grid, int active_index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_cell_dy1A",
+      "args": "const rd_grid_type *grid, int active_index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_cell_dz1A",
+      "args": "const rd_grid_type *grid, int active_index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_cell_dx1",
+      "args": "const rd_grid_type *grid, int global_index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_cell_dy1",
+      "args": "const rd_grid_type *grid, int global_index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_cell_dz1",
+      "args": "const rd_grid_type *grid, int global_index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_cell_thickness1",
+      "args": "const rd_grid_type *grid, int global_index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_cdepth1A",
+      "args": "const rd_grid_type *grid, int active_index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_cdepth1",
+      "args": "const rd_grid_type *grid, int global_index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_cell_volume1",
+      "args": "const rd_grid_type *rd_grid, int global_index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_cell_volume1A",
+      "args": "const rd_grid_type *rd_grid, int active_index"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_active_index3",
+      "args": "const rd_grid_type *rd_grid, int i, int j, int k"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_active_index1",
+      "args": "const rd_grid_type *rd_grid, int global_index"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_grid_cell_active3",
+      "args": "const rd_grid_type *, int, int, int"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_grid_cell_active1",
+      "args": "const rd_grid_type *, int"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_grid_ijk_valid",
+      "args": "const rd_grid_type *, int, int, int"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_global_index3",
+      "args": "const rd_grid_type *, int, int, int"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_global_index1A",
+      "args": "const rd_grid_type *rd_grid, int active_index"
+    },
+    {
+      "ret": "void",
+      "name": "rd_grid_add_self_nnc",
+      "args": "rd_grid_type *grid1, int g1, int g2, int nnc_index"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_grid_exists",
+      "args": "const char *case_input"
+    },
+    {
+      "ret": "void",
+      "name": "rd_grid_free",
+      "args": "rd_grid_type *"
+    },
+    {
+      "ret": "void",
+      "name": "rd_grid_get_dims",
+      "args": "const rd_grid_type *, int *, int *, int *, int *"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_nz",
+      "args": "const rd_grid_type *grid"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_nx",
+      "args": "const rd_grid_type *grid"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_ny",
+      "args": "const rd_grid_type *grid"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_nactive",
+      "args": "const rd_grid_type *grid"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_nactive_fracture",
+      "args": "const rd_grid_type *grid"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_active_index",
+      "args": "const rd_grid_type *, int, int, int"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_global_size",
+      "args": "const rd_grid_type *rd_grid"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_active_size",
+      "args": "const rd_grid_type *rd_grid"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_top1A",
+      "args": "const rd_grid_type *grid, int active_index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_top2",
+      "args": "const rd_grid_type *grid, int i, int j"
+    },
+    {
+      "ret": "double",
+      "name": "rd_grid_get_bottom2",
+      "args": "const rd_grid_type *grid, int i, int j"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_locate_depth",
+      "args": "const rd_grid_type *grid, double depth, int i, int j"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_grid_cell_invalid1",
+      "args": "const rd_grid_type *rd_grid, int global_index"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_grid_cell_valid1",
+      "args": "const rd_grid_type *rd_grid, int global_index"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_num_lgr",
+      "args": "const rd_grid_type *main_grid"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_lgr_nr",
+      "args": "const rd_grid_type *rd_grid"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_lgr_nr_from_name",
+      "args": "const rd_grid_type *grid, const char *name"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_grid_has_lgr",
+      "args": "const rd_grid_type *main_grid, const char *__lgr_name"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_grid_has_lgr_nr",
+      "args": "const rd_grid_type *main_grid, int lgr_nr"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_grid_test_lgr_consistency",
+      "args": "const rd_grid_type *rd_grid"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_zcorn_index__",
+      "args": "int nx, int ny, int i, int j, int k, int c"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_grid_dual_grid",
+      "args": "const rd_grid_type *rd_grid"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_grid_cell_regular1",
+      "args": "const rd_grid_type *rd_grid, int global_index"
+    },
+    {
+      "ret": "void",
+      "name": "rd_grid_init_zcorn_data",
+      "args": "const rd_grid_type *grid, float *zcorn"
+    },
+    {
+      "ret": "void",
+      "name": "rd_grid_init_zcorn_data_double",
+      "args": "const rd_grid_type *grid, double *zcorn"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_zcorn_size",
+      "args": "const rd_grid_type *grid"
+    },
+    {
+      "ret": "void",
+      "name": "rd_grid_init_coord_data",
+      "args": "const rd_grid_type *grid, float *coord"
+    },
+    {
+      "ret": "void",
+      "name": "rd_grid_init_coord_data_double",
+      "args": "const rd_grid_type *grid, double *coord"
+    },
+    {
+      "ret": "int",
+      "name": "rd_grid_get_coord_size",
+      "args": "const rd_grid_type *rd_grid"
+    },
+    {
+      "ret": "void",
+      "name": "rd_grid_init_actnum_data",
+      "args": "const rd_grid_type *grid, int *actnum"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_grid_use_mapaxes",
+      "args": "const rd_grid_type *grid"
+    },
+    {
+      "ret": "void",
+      "name": "rd_grid_reset_actnum",
+      "args": "rd_grid_type *grid, const int *actnum"
+    },
+    {
+      "ret": "ert_rd_unit_enum",
+      "name": "rd_grid_get_unit_system",
+      "args": "const rd_grid_type *grid"
+    }
+  ],
+  "resdata\\rd_kw.hpp": [
+    {
+      "ret": "size_t",
+      "name": "rd_kw_fortio_size",
+      "args": "const rd_kw_type *rd_kw"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_set_data_ptr",
+      "args": "rd_kw_type *rd_kw, void *data"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_fwrite_data",
+      "args": "const rd_kw_type *_rd_kw, fortio_type *fortio"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_fread_realloc_data",
+      "args": "rd_kw_type *rd_kw, fortio_type *fortio"
+    },
+    {
+      "ret": "rd_data_type",
+      "name": "rd_kw_get_data_type",
+      "args": "const rd_kw_type *"
+    },
+    {
+      "ret": "rd_read_status_enum",
+      "name": "rd_kw_fread_header",
+      "args": "rd_kw_type *, fortio_type *"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_set_header_name",
+      "args": "rd_kw_type *, const char *"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_fseek_kw",
+      "args": "const char *, bool, bool, fortio_type *"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_fskip",
+      "args": "fortio_type *"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_fread_realloc",
+      "args": "rd_kw_type *, fortio_type *"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_free",
+      "args": "rd_kw_type *"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_resize",
+      "args": "rd_kw_type *rd_kw, int new_size"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_memcpy",
+      "args": "rd_kw_type *, const rd_kw_type *"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_get_memcpy_data",
+      "args": "const rd_kw_type *, void *"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_set_memcpy_data",
+      "args": "rd_kw_type *, const void *"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_fwrite",
+      "args": "const rd_kw_type *, fortio_type *"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_iget",
+      "args": "const rd_kw_type *, int, void *"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_iset",
+      "args": "rd_kw_type *rd_kw, int i, const void *iptr"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_iset_char_ptr",
+      "args": "rd_kw_type *rd_kw, int index, const char *s"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_iset_string8",
+      "args": "rd_kw_type *rd_kw, int index, const char *s8"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_iset_string_ptr",
+      "args": "rd_kw_type *, int, const char *"
+    },
+    {
+      "ret": "int",
+      "name": "rd_kw_get_size",
+      "args": "const rd_kw_type *"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_summarize",
+      "args": "const rd_kw_type *rd_kw"
+    },
+    {
+      "ret": "double",
+      "name": "rd_kw_iget_as_double",
+      "args": "const rd_kw_type *rd_kw, int i"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_equal",
+      "args": "const rd_kw_type *rd_kw1, const rd_kw_type *rd_kw2"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_data_equal",
+      "args": "const rd_kw_type *rd_kw, const void *data"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_content_equal",
+      "args": "const rd_kw_type *rd_kw1, const rd_kw_type *rd_kw2"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_fskip_data__",
+      "args": "rd_data_type, int, fortio_type *"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_fskip_data",
+      "args": "rd_kw_type *rd_kw, fortio_type *fortio"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_fskip_header",
+      "args": "fortio_type *fortio"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_inplace_safe_div",
+      "args": "rd_kw_type *target_kw, const rd_kw_type *divisor"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_inplace_sqrt",
+      "args": "rd_kw_type *kw"
+    },
+    {
+      "ret": "int",
+      "name": "rd_kw_element_sum_int",
+      "args": "const rd_kw_type *rd_kw"
+    },
+    {
+      "ret": "double",
+      "name": "rd_kw_element_sum_float",
+      "args": "const rd_kw_type *rd_kw"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_element_sum",
+      "args": "const rd_kw_type *, void *"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_max_min",
+      "args": "const rd_kw_type *, void *, void *"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_fprintf_data",
+      "args": "const rd_kw_type *rd_kw, const char *fmt, FILE *stream"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_memcpy_data",
+      "args": "rd_kw_type *target, const rd_kw_type *src"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_scalar_set_float_or_double",
+      "args": "rd_kw_type *rd_kw, double value"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_inplace_add_squared",
+      "args": "rd_kw_type *target_kw, const rd_kw_type *add_kw"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_inplace_add",
+      "args": "rd_kw_type *target_kw, const rd_kw_type *add_kw"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_inplace_sub",
+      "args": "rd_kw_type *target_kw, const rd_kw_type *sub_kw"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_inplace_div",
+      "args": "rd_kw_type *target_kw, const rd_kw_type *div_kw"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_inplace_mul",
+      "args": "rd_kw_type *target_kw, const rd_kw_type *mul_kw"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_inplace_abs",
+      "args": "rd_kw_type *kw"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_assert_binary_numeric",
+      "args": "const rd_kw_type *kw1, const rd_kw_type *kw2"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_assert_numeric",
+      "args": "const rd_kw_type *kw"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_assert_binary",
+      "args": "const rd_kw_type *kw1, const rd_kw_type *kw2"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_scale_float_or_double",
+      "args": "rd_kw_type *rd_kw, double scale_factor"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_shift_float_or_double",
+      "args": "rd_kw_type *rd_kw, double shift_value"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_kw_iget_bool",
+      "args": "const rd_kw_type *rd_kw, int i"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_iset_bool",
+      "args": "rd_kw_type *rd_kw, int i, bool bool_value"
+    },
+    {
+      "ret": "rd_type_enum",
+      "name": "rd_kw_get_type",
+      "args": "const rd_kw_type *"
+    }
+  ],
+  "resdata\\rd_kw_grdecl.hpp": [
+    {
+      "ret": "bool",
+      "name": "rd_kw_grdecl_fseek_kw",
+      "args": "const char *, bool, FILE *"
+    },
+    {
+      "ret": "void",
+      "name": "rd_kw_fprintf_grdecl",
+      "args": "const rd_kw_type *rd_kw, FILE *stream"
+    }
+  ],
+  "resdata\\rd_region.hpp": [
+    {
+      "ret": "void",
+      "name": "rd_region_reset",
+      "args": "rd_region_type *rd_region"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_free",
+      "args": "rd_region_type *region"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_select_true",
+      "args": "rd_region_type *region, const rd_kw_type *rd_kw"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_invert_selection",
+      "args": "rd_region_type *region"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_select_all",
+      "args": "rd_region_type *region"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_deselect_all",
+      "args": "rd_region_type *region"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_select_false",
+      "args": "rd_region_type *region, const rd_kw_type *rd_kw"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_select_inactive_cells",
+      "args": "rd_region_type *region"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_deselect_inactive_cells",
+      "args": "rd_region_type *region"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_select_active_cells",
+      "args": "rd_region_type *region"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_deselect_active_cells",
+      "args": "rd_region_type *region"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_select_i1i2",
+      "args": "rd_region_type *region, int i1, int i2"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_deselect_i1i2",
+      "args": "rd_region_type *region, int i1, int i2"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_select_j1j2",
+      "args": "rd_region_type *region, int j1, int j2"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_deselect_j1j2",
+      "args": "rd_region_type *region, int j1, int i2"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_select_k1k2",
+      "args": "rd_region_type *region, int k1, int k2"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_deselect_k1k2",
+      "args": "rd_region_type *region, int k1, int i2"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_select_shallow_cells",
+      "args": "rd_region_type *region, double depth_limit"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_select_deep_cells",
+      "args": "rd_region_type *region, double depth_limit"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_deselect_deep_cells",
+      "args": "rd_region_type *region, double depth_limit"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_select_thin_cells",
+      "args": "rd_region_type *rd_region, double dz_limit"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_deselect_thin_cells",
+      "args": "rd_region_type *rd_region, double dz_limit"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_select_thick_cells",
+      "args": "rd_region_type *rd_region, double dz_limit"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_deselect_thick_cells",
+      "args": "rd_region_type *rd_region, double dz_limit"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_union",
+      "args": "rd_region_type *region, const rd_region_type *new_region"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_xor",
+      "args": "rd_region_type *region, const rd_region_type *new_region"
+    },
+    {
+      "ret": "void",
+      "name": "rd_region_set_name",
+      "args": "rd_region_type *region, const char *name"
+    }
+  ],
+  "resdata\\rd_rft_cell.hpp": [
+    {
+      "ret": "void",
+      "name": "rd_rft_cell_free",
+      "args": "rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_rft_cell_ijk_equal",
+      "args": "const rd_rft_cell_type *cell, int i, int j, int k"
+    },
+    {
+      "ret": "void",
+      "name": "rd_rft_cell_get_ijk",
+      "args": "const rd_rft_cell_type *cell, int *i, int *j, int *k"
+    },
+    {
+      "ret": "int",
+      "name": "rd_rft_cell_get_i",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "int",
+      "name": "rd_rft_cell_get_j",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "int",
+      "name": "rd_rft_cell_get_k",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_depth",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_pressure",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_swat",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_sgas",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_soil",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_wrat",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_grat",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_orat",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_connection_start",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_connection_end",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_flowrate",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_oil_flowrate",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_gas_flowrate",
+      "args": "const rd_rft_cell_type *cell"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_cell_get_water_flowrate",
+      "args": "const rd_rft_cell_type *cell"
+    }
+  ],
+  "resdata\\rd_rft_file.hpp": [
+    {
+      "ret": "bool",
+      "name": "rd_rft_file_case_has_rft",
+      "args": "const char *case_input"
+    },
+    {
+      "ret": "void",
+      "name": "rd_rft_file_free",
+      "args": "rd_rft_file_type *"
+    },
+    {
+      "ret": "int",
+      "name": "rd_rft_file_get_size",
+      "args": "const rd_rft_file_type *rft_file"
+    },
+    {
+      "ret": "int",
+      "name": "rd_rft_file_get_num_wells",
+      "args": "const rd_rft_file_type *rft_file"
+    }
+  ],
+  "resdata\\rd_rft_node.hpp": [
+    {
+      "ret": "void",
+      "name": "rd_rft_node_free",
+      "args": "rd_rft_node_type *"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_rft_node_get_date",
+      "args": "const rd_rft_node_type *"
+    },
+    {
+      "ret": "int",
+      "name": "rd_rft_node_get_size",
+      "args": "const rd_rft_node_type *"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_rft_node_is_RFT",
+      "args": "const rd_rft_node_type *rft_node"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_rft_node_is_PLT",
+      "args": "const rd_rft_node_type *rft_node"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_rft_node_is_SEGMENT",
+      "args": "const rd_rft_node_type *rft_node"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_rft_node_is_MSW",
+      "args": "const rd_rft_node_type *rft_node"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_node_iget_pressure",
+      "args": "const rd_rft_node_type *rft_node, int index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_node_iget_depth",
+      "args": "const rd_rft_node_type *rft_node, int index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_node_iget_wrat",
+      "args": "const rd_rft_node_type *rft_node, int index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_node_iget_grat",
+      "args": "const rd_rft_node_type *rft_node, int index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_node_iget_orat",
+      "args": "const rd_rft_node_type *rft_node, int index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_node_iget_swat",
+      "args": "const rd_rft_node_type *rft_node, int index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_node_iget_sgas",
+      "args": "const rd_rft_node_type *rft_node, int index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_node_iget_soil",
+      "args": "const rd_rft_node_type *rft_node, int index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rft_node_get_days",
+      "args": "const rd_rft_node_type *rft_node"
+    },
+    {
+      "ret": "rd_rft_enum",
+      "name": "rd_rft_node_get_type",
+      "args": "const rd_rft_node_type *rft_node"
+    }
+  ],
+  "resdata\\rd_rsthead.hpp": [
+    {
+      "ret": "void",
+      "name": "rd_rsthead_free",
+      "args": "rd_rsthead_type *rsthead"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_rsthead_date",
+      "args": "const rd_kw_type *intehead_kw"
+    },
+    {
+      "ret": "double",
+      "name": "rd_rsthead_get_sim_days",
+      "args": "const rd_rsthead_type *header"
+    },
+    {
+      "ret": "int",
+      "name": "rd_rsthead_get_report_step",
+      "args": "const rd_rsthead_type *header"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_rsthead_get_sim_time",
+      "args": "const rd_rsthead_type *header"
+    },
+    {
+      "ret": "int",
+      "name": "rd_rsthead_get_nxconz",
+      "args": "const rd_rsthead_type *rsthead"
+    },
+    {
+      "ret": "int",
+      "name": "rd_rsthead_get_ncwmax",
+      "args": "const rd_rsthead_type *rsthead"
+    }
+  ],
+  "resdata\\rd_smspec.hpp": [
+    {
+      "ret": "rd_smspec_var_type",
+      "name": "rd_smspec_identify_var_type",
+      "args": "const char *var"
+    },
+    {
+      "ret": "void",
+      "name": "rd_smspec_free",
+      "args": "rd_smspec_type *"
+    },
+    {
+      "ret": "int",
+      "name": "rd_smspec_get_date_day_index",
+      "args": "const rd_smspec_type *smspec"
+    },
+    {
+      "ret": "int",
+      "name": "rd_smspec_get_date_month_index",
+      "args": "const rd_smspec_type *smspec"
+    },
+    {
+      "ret": "int",
+      "name": "rd_smspec_get_date_year_index",
+      "args": "const rd_smspec_type *smspec"
+    },
+    {
+      "ret": "int",
+      "name": "rd_smspec_get_time_seconds",
+      "args": "const rd_smspec_type *rd_smspec"
+    },
+    {
+      "ret": "int",
+      "name": "rd_smspec_get_time_index",
+      "args": "const rd_smspec_type *rd_smspec"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_smspec_get_start_time",
+      "args": "const rd_smspec_type *"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_smspec_get_formatted",
+      "args": "const rd_smspec_type *rd_smspec"
+    },
+    {
+      "ret": "int",
+      "name": "rd_smspec_get_first_step",
+      "args": "const rd_smspec_type *rd_smspec"
+    },
+    {
+      "ret": "int",
+      "name": "rd_smspec_get_restart_step",
+      "args": "const rd_smspec_type *rd_smspec"
+    },
+    {
+      "ret": "int",
+      "name": "rd_smspec_get_params_size",
+      "args": "const rd_smspec_type *smspec"
+    },
+    {
+      "ret": "int",
+      "name": "rd_smspec_num_nodes",
+      "args": "const rd_smspec_type *smspec"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_smspec_equal",
+      "args": "const rd_smspec_type *self, const rd_smspec_type *other"
+    },
+    {
+      "ret": "ert_rd_unit_enum",
+      "name": "rd_smspec_get_unit_system",
+      "args": "const rd_smspec_type *smspec"
+    }
+  ],
+  "resdata\\rd_subsidence.hpp": [
+    {
+      "ret": "void",
+      "name": "rd_subsidence_free",
+      "args": "rd_subsidence_type *rd_subsidence_config"
+    }
+  ],
+  "resdata\\rd_sum.hpp": [
+    {
+      "ret": "double",
+      "name": "rd_sum_time2days",
+      "args": "const rd_sum_type *rd_sum, time_t sim_time"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_get_report_step_from_time",
+      "args": "const rd_sum_type *sum, time_t sim_time"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_get_report_step_from_days",
+      "args": "const rd_sum_type *sum, double sim_days"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_sum_check_sim_time",
+      "args": "const rd_sum_type *sum, time_t sim_time"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_sum_check_sim_days",
+      "args": "const rd_sum_type *sum, double sim_days"
+    },
+    {
+      "ret": "double",
+      "name": "rd_sum_iget",
+      "args": "const rd_sum_type *rd_sum, int time_index, int param_index"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_get_data_length",
+      "args": "const rd_sum_type *rd_sum"
+    },
+    {
+      "ret": "void",
+      "name": "rd_sum_free",
+      "args": "rd_sum_type *"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_sum_has_general_var",
+      "args": "const rd_sum_type *rd_sum, const char *lookup_kw"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_sum_has_key",
+      "args": "const rd_sum_type *rd_sum, const char *lookup_kw"
+    },
+    {
+      "ret": "ert_rd_unit_enum",
+      "name": "rd_sum_get_unit_system",
+      "args": "const rd_sum_type *rd_sum"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_get_restart_step",
+      "args": "const rd_sum_type *rd_sum"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_get_last_report_step",
+      "args": "const rd_sum_type *rd_sum"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_get_first_report_step",
+      "args": "const rd_sum_type *rd_sum"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_sum_get_report_time",
+      "args": "const rd_sum_type *rd_sum, int report_step"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_sum_iget_sim_time",
+      "args": "const rd_sum_type *rd_sum, int index"
+    },
+    {
+      "ret": "double",
+      "name": "rd_sum_iget_sim_days",
+      "args": "const rd_sum_type *rd_sum, int time_index"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_iget_report_step",
+      "args": "const rd_sum_type *rd_sum, int internal_index"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_sum_get_data_start",
+      "args": "const rd_sum_type *rd_sum"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_sum_get_end_time",
+      "args": "const rd_sum_type *rd_sum"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_sum_get_start_time",
+      "args": "const rd_sum_type *"
+    },
+    {
+      "ret": "double",
+      "name": "rd_sum_get_sim_length",
+      "args": "const rd_sum_type *rd_sum"
+    },
+    {
+      "ret": "double",
+      "name": "rd_sum_get_first_day",
+      "args": "const rd_sum_type *rd_sum"
+    },
+    {
+      "ret": "rd_smspec_var_type",
+      "name": "rd_sum_identify_var_type",
+      "args": "const char *var"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_iget_report_end",
+      "args": "const rd_sum_type *rd_sum, int report_step"
+    },
+    {
+      "ret": "void",
+      "name": "rd_sum_set_case",
+      "args": "rd_sum_type *rd_sum, const char *input_arg"
+    },
+    {
+      "ret": "void",
+      "name": "rd_sum_fwrite",
+      "args": "const rd_sum_type *rd_sum"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_sum_can_write",
+      "args": "const rd_sum_type *rd_sum"
+    }
+  ],
+  "resdata\\rd_sum_data.hpp": [
+    {
+      "ret": "bool",
+      "name": "rd_sum_data_can_write",
+      "args": "const rd_sum_data_type *data"
+    },
+    {
+      "ret": "double",
+      "name": "rd_sum_data_time2days",
+      "args": "const rd_sum_data_type *data, time_t sim_time"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_sum_data_check_sim_time",
+      "args": "const rd_sum_data_type *data, time_t sim_time"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_sum_data_check_sim_days",
+      "args": "const rd_sum_data_type *data, double sim_days"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_sum_data_get_data_start",
+      "args": "const rd_sum_data_type *data"
+    },
+    {
+      "ret": "double",
+      "name": "rd_sum_data_get_first_day",
+      "args": "const rd_sum_data_type *data"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_sum_data_get_sim_end",
+      "args": "const rd_sum_data_type *data"
+    },
+    {
+      "ret": "double",
+      "name": "rd_sum_data_get_sim_length",
+      "args": "const rd_sum_data_type *data"
+    },
+    {
+      "ret": "double",
+      "name": "rd_sum_data_iget_sim_days",
+      "args": "const rd_sum_data_type *, int"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_sum_data_iget_sim_time",
+      "args": "const rd_sum_data_type *, int"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_sum_data_has_report_step",
+      "args": "const rd_sum_data_type *, int"
+    },
+    {
+      "ret": "void",
+      "name": "rd_sum_data_free",
+      "args": "rd_sum_data_type *"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_data_get_last_report_step",
+      "args": "const rd_sum_data_type *data"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_data_get_first_report_step",
+      "args": "const rd_sum_data_type *data"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_data_get_length",
+      "args": "const rd_sum_data_type *data"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_data_iget_report_end",
+      "args": "const rd_sum_data_type *data, int report_step"
+    }
+  ],
+  "resdata\\rd_sum_tstep.hpp": [
+    {
+      "ret": "void",
+      "name": "rd_sum_tstep_free",
+      "args": "rd_sum_tstep_type *ministep"
+    },
+    {
+      "ret": "void",
+      "name": "rd_sum_tstep_free__",
+      "args": "void *__ministep"
+    },
+    {
+      "ret": "double",
+      "name": "rd_sum_tstep_iget",
+      "args": "const rd_sum_tstep_type *ministep, int index"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_sum_tstep_get_sim_time",
+      "args": "const rd_sum_tstep_type *ministep"
+    },
+    {
+      "ret": "double",
+      "name": "rd_sum_tstep_get_sim_days",
+      "args": "const rd_sum_tstep_type *ministep"
+    },
+    {
+      "ret": "double",
+      "name": "rd_sum_tstep_get_sim_seconds",
+      "args": "const rd_sum_tstep_type *ministep"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_tstep_get_report",
+      "args": "const rd_sum_tstep_type *ministep"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_tstep_get_ministep",
+      "args": "const rd_sum_tstep_type *ministep"
+    },
+    {
+      "ret": "void",
+      "name": "rd_sum_tstep_iset",
+      "args": "rd_sum_tstep_type *tstep, int index, float value"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_sum_tstep_has_key",
+      "args": "const rd_sum_tstep_type *tstep, const char *gen_key"
+    }
+  ],
+  "resdata\\rd_sum_vector.hpp": [
+    {
+      "ret": "void",
+      "name": "rd_sum_vector_free",
+      "args": "rd_sum_vector_type *keylist"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_sum_vector_add_key",
+      "args": "rd_sum_vector_type *keylist, const char *key"
+    },
+    {
+      "ret": "void",
+      "name": "rd_sum_vector_add_keys",
+      "args": "rd_sum_vector_type *keylist, const char *pattern"
+    },
+    {
+      "ret": "int",
+      "name": "rd_sum_vector_get_size",
+      "args": "const rd_sum_vector_type *rd_sum_vector"
+    }
+  ],
+  "resdata\\rd_type.hpp": [
+    {
+      "ret": "rd_data_type",
+      "name": "rd_type_create_from_name",
+      "args": "const char *"
+    },
+    {
+      "ret": "rd_data_type",
+      "name": "rd_type_create",
+      "args": "const rd_type_enum, const size_t"
+    },
+    {
+      "ret": "rd_data_type",
+      "name": "rd_type_create_from_type",
+      "args": "const rd_type_enum"
+    },
+    {
+      "ret": "rd_type_enum",
+      "name": "rd_type_get_type",
+      "args": "const rd_data_type"
+    },
+    {
+      "ret": "int",
+      "name": "rd_type_get_sizeof_ctype",
+      "args": "const rd_data_type"
+    },
+    {
+      "ret": "int",
+      "name": "rd_type_get_sizeof_iotype",
+      "args": "const rd_data_type"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_type_is_equal",
+      "args": "const rd_data_type, const rd_data_type"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_type_is_numeric",
+      "args": "const rd_data_type"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_type_is_alpha",
+      "args": "const rd_data_type"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_type_is_char",
+      "args": "const rd_data_type"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_type_is_int",
+      "args": "const rd_data_type"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_type_is_float",
+      "args": "const rd_data_type"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_type_is_double",
+      "args": "const rd_data_type"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_type_is_mess",
+      "args": "const rd_data_type"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_type_is_bool",
+      "args": "const rd_data_type"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_type_is_string",
+      "args": "const rd_data_type"
+    }
+  ],
+  "resdata\\rd_util.hpp": [
+    {
+      "ret": "int",
+      "name": "rd_filename_report_nr",
+      "args": "const char *"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_get_start_date",
+      "args": "const char *"
+    },
+    {
+      "ret": "int",
+      "name": "rd_get_num_cpu",
+      "args": "const char *data_file"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_fmt_file",
+      "args": "const char *filename, bool *__fmt_file"
+    },
+    {
+      "ret": "int",
+      "name": "rd_fname_report_cmp",
+      "args": "const void *f1, const void *f2"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_make_date",
+      "args": "int mday, int month, int year"
+    },
+    {
+      "ret": "time_t",
+      "name": "rd_make_date__",
+      "args": "int mday, int month, int year, int *year_offset"
+    },
+    {
+      "ret": "void",
+      "name": "rd_set_date_values",
+      "args": "time_t t, int *mday, int *month, int *year"
+    },
+    {
+      "ret": "bool",
+      "name": "rd_path_access",
+      "args": "const char *rd_case"
+    }
+  ],
+  "resdata\\well\\well_branch_collection.hpp": [
+    {
+      "ret": "void",
+      "name": "well_branch_collection_free",
+      "args": "well_branch_collection_type *branches"
+    }
+  ],
+  "resdata\\well\\well_conn.hpp": [
+    {
+      "ret": "void",
+      "name": "well_conn_free",
+      "args": "well_conn_type *conn"
+    },
+    {
+      "ret": "bool",
+      "name": "well_conn_MSW",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "int",
+      "name": "well_conn_get_i",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "int",
+      "name": "well_conn_get_j",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "int",
+      "name": "well_conn_get_k",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "well_conn_dir_enum",
+      "name": "well_conn_get_dir",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "bool",
+      "name": "well_conn_open",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "int",
+      "name": "well_conn_get_segment_id",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "bool",
+      "name": "well_conn_fracture_connection",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "bool",
+      "name": "well_conn_matrix_connection",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "bool",
+      "name": "well_conn_equal",
+      "args": "const well_conn_type *conn1, const well_conn_type *conn2"
+    },
+    {
+      "ret": "double",
+      "name": "well_conn_get_connection_factor",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "double",
+      "name": "well_conn_get_oil_rate",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "double",
+      "name": "well_conn_get_gas_rate",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "double",
+      "name": "well_conn_get_water_rate",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "double",
+      "name": "well_conn_get_volume_rate",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "double",
+      "name": "well_conn_get_oil_rate_si",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "double",
+      "name": "well_conn_get_gas_rate_si",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "double",
+      "name": "well_conn_get_water_rate_si",
+      "args": "const well_conn_type *conn"
+    },
+    {
+      "ret": "double",
+      "name": "well_conn_get_volume_rate_si",
+      "args": "const well_conn_type *conn"
+    }
+  ],
+  "resdata\\well\\well_conn_collection.hpp": [
+    {
+      "ret": "void",
+      "name": "well_conn_collection_free",
+      "args": "well_conn_collection_type *wellcc"
+    },
+    {
+      "ret": "int",
+      "name": "well_conn_collection_get_size",
+      "args": "const well_conn_collection_type *wellcc"
+    }
+  ],
+  "resdata\\well\\well_info.hpp": [
+    {
+      "ret": "void",
+      "name": "well_info_free",
+      "args": "well_info_type *well_info"
+    },
+    {
+      "ret": "int",
+      "name": "well_info_get_num_wells",
+      "args": "const well_info_type *well_info"
+    },
+    {
+      "ret": "bool",
+      "name": "well_info_has_well",
+      "args": "well_info_type *well_info, const char *well_name"
+    }
+  ],
+  "resdata\\well\\well_rseg_loader.hpp": [
+    {
+      "ret": "void",
+      "name": "well_rseg_loader_free",
+      "args": "well_rseg_loader_type *well_rseg_loader"
+    }
+  ],
+  "resdata\\well\\well_segment.hpp": [
+    {
+      "ret": "void",
+      "name": "well_segment_free",
+      "args": "well_segment_type *segment"
+    },
+    {
+      "ret": "bool",
+      "name": "well_segment_active",
+      "args": "const well_segment_type *segment"
+    },
+    {
+      "ret": "bool",
+      "name": "well_segment_main_stem",
+      "args": "const well_segment_type *segment"
+    },
+    {
+      "ret": "bool",
+      "name": "well_segment_nearest_wellhead",
+      "args": "const well_segment_type *segment"
+    },
+    {
+      "ret": "int",
+      "name": "well_segment_get_link_count",
+      "args": "const well_segment_type *segment"
+    },
+    {
+      "ret": "int",
+      "name": "well_segment_get_branch_id",
+      "args": "const well_segment_type *segment"
+    },
+    {
+      "ret": "int",
+      "name": "well_segment_get_outlet_id",
+      "args": "const well_segment_type *segment"
+    },
+    {
+      "ret": "int",
+      "name": "well_segment_get_id",
+      "args": "const well_segment_type *segment"
+    },
+    {
+      "ret": "bool",
+      "name": "well_segment_has_global_grid_connections",
+      "args": "const well_segment_type *segment"
+    },
+    {
+      "ret": "double",
+      "name": "well_segment_get_depth",
+      "args": "const well_segment_type *segment"
+    },
+    {
+      "ret": "double",
+      "name": "well_segment_get_length",
+      "args": "const well_segment_type *segment"
+    },
+    {
+      "ret": "double",
+      "name": "well_segment_get_total_length",
+      "args": "const well_segment_type *segment"
+    },
+    {
+      "ret": "double",
+      "name": "well_segment_get_diameter",
+      "args": "const well_segment_type *segment"
+    }
+  ],
+  "resdata\\well\\well_state.hpp": [
+    {
+      "ret": "bool",
+      "name": "well_state_is_MSW",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "bool",
+      "name": "well_state_has_segment_data",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "void",
+      "name": "well_state_free",
+      "args": "well_state_type *well"
+    },
+    {
+      "ret": "int",
+      "name": "well_state_get_report_nr",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "time_t",
+      "name": "well_state_get_sim_time",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "well_type_enum",
+      "name": "well_state_get_type",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "bool",
+      "name": "well_state_is_open",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "int",
+      "name": "well_state_get_well_nr",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "well_type_enum",
+      "name": "well_state_translate_rd_type_int",
+      "args": "int int_type"
+    },
+    {
+      "ret": "bool",
+      "name": "well_state_has_global_connections",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "double",
+      "name": "well_state_get_oil_rate",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "double",
+      "name": "well_state_get_gas_rate",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "double",
+      "name": "well_state_get_water_rate",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "double",
+      "name": "well_state_get_volume_rate",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "double",
+      "name": "well_state_get_water_rate_si",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "double",
+      "name": "well_state_get_oil_rate_si",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "double",
+      "name": "well_state_get_volume_rate_si",
+      "args": "const well_state_type *well_state"
+    },
+    {
+      "ret": "double",
+      "name": "well_state_get_gas_rate_si",
+      "args": "const well_state_type *well_state"
+    }
+  ],
+  "resdata\\well\\well_ts.hpp": [
+    {
+      "ret": "void",
+      "name": "well_ts_free",
+      "args": "well_ts_type *well_ts"
+    },
+    {
+      "ret": "void",
+      "name": "well_ts_add_well",
+      "args": "well_ts_type *well_ts, well_state_type *well_state"
+    },
+    {
+      "ret": "int",
+      "name": "well_ts_get_size",
+      "args": "const well_ts_type *well_ts"
+    }
+  ]
+}
