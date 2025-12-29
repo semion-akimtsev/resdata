@@ -167,8 +167,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeFaultBlockHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeFaultBlockHandle() : base(true) {}
         public SafeFaultBlockHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void fault_block_free__(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            fault_block_free__(handle);
             return true;
         }
     }
@@ -231,8 +233,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeGeoSurfaceHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeGeoSurfaceHandle() : base(true) {}
         public SafeGeoSurfaceHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void geo_surface_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            geo_surface_free(handle);
             return true;
         }
     }
@@ -255,8 +259,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeHashHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeHashHandle() : base(true) {}
         public SafeHashHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void hash_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            hash_free(handle);
             return true;
         }
     }
@@ -271,8 +277,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeHashSllHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeHashSllHandle() : base(true) {}
         public SafeHashSllHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void hash_sll_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            hash_sll_free(handle);
             return true;
         }
     }
@@ -391,16 +399,20 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeLayerHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeLayerHandle() : base(true) {}
         public SafeLayerHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void layer_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            layer_free(handle);
             return true;
         }
     }
     public sealed class SafeLookupTableHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeLookupTableHandle() : base(true) {}
         public SafeLookupTableHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void lookup_table_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            lookup_table_free(handle);
             return true;
         }
     }
@@ -471,16 +483,20 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeNncInfoHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeNncInfoHandle() : base(true) {}
         public SafeNncInfoHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void nnc_info_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            nnc_info_free(handle);
             return true;
         }
     }
     public sealed class SafeNncVectorHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeNncVectorHandle() : base(true) {}
         public SafeNncVectorHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void nnc_vector_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            nnc_vector_free(handle);
             return true;
         }
     }
@@ -519,8 +535,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafePathStackHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafePathStackHandle() : base(true) {}
         public SafePathStackHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void path_stack_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            path_stack_free(handle);
             return true;
         }
     }
@@ -535,8 +553,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafePermVectorHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafePermVectorHandle() : base(true) {}
         public SafePermVectorHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void perm_vector_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            perm_vector_free(handle);
             return true;
         }
     }
@@ -591,8 +611,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeRdFileViewHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeRdFileViewHandle() : base(true) {}
         public SafeRdFileViewHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void rd_file_view_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            rd_file_view_free(handle);
             return true;
         }
     }
@@ -607,8 +629,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeRdGridHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeRdGridHandle() : base(true) {}
         public SafeRdGridHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void rd_grid_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            rd_grid_free(handle);
             return true;
         }
     }
@@ -639,8 +663,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeRdKwHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeRdKwHandle() : base(true) {}
         public SafeRdKwHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void rd_kw_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            rd_kw_free(handle);
             return true;
         }
     }
@@ -655,8 +681,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeRdRegionHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeRdRegionHandle() : base(true) {}
         public SafeRdRegionHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void rd_region_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            rd_region_free(handle);
             return true;
         }
     }
@@ -679,8 +707,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeRdSmspecHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeRdSmspecHandle() : base(true) {}
         public SafeRdSmspecHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void rd_smspec_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            rd_smspec_free(handle);
             return true;
         }
     }
@@ -711,8 +741,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeRdSumHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeRdSumHandle() : base(true) {}
         public SafeRdSumHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void rd_sum_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            rd_sum_free(handle);
             return true;
         }
     }
@@ -727,8 +759,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeRdSumVectorHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeRdSumVectorHandle() : base(true) {}
         public SafeRdSumVectorHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void rd_sum_vector_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            rd_sum_vector_free(handle);
             return true;
         }
     }
@@ -759,8 +793,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeRngHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeRngHandle() : base(true) {}
         public SafeRngHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void rng_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            rng_free(handle);
             return true;
         }
     }
@@ -951,8 +987,10 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeVectorHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeVectorHandle() : base(true) {}
         public SafeVectorHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void vector_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            vector_free(handle);
             return true;
         }
     }
@@ -983,32 +1021,40 @@ namespace Resdata.Bindings.Generated {
     public sealed class SafeWellInfoHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeWellInfoHandle() : base(true) {}
         public SafeWellInfoHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void well_info_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            well_info_free(handle);
             return true;
         }
     }
     public sealed class SafeWellRsegLoaderHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeWellRsegLoaderHandle() : base(true) {}
         public SafeWellRsegLoaderHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void well_rseg_loader_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            well_rseg_loader_free(handle);
             return true;
         }
     }
     public sealed class SafeWellStateHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeWellStateHandle() : base(true) {}
         public SafeWellStateHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void well_state_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            well_state_free(handle);
             return true;
         }
     }
     public sealed class SafeWellTsHandle : SafeHandleZeroOrMinusOneIsInvalid {
         private SafeWellTsHandle() : base(true) {}
         public SafeWellTsHandle(IntPtr handle, bool ownsHandle = true) : base(ownsHandle) { SetHandle(handle); }
+        [DllImport("libresdata", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void well_ts_free(IntPtr ptr);
         protected override bool ReleaseHandle() {
-            // TODO: add proper release via native free function when available
+            well_ts_free(handle);
             return true;
         }
     }
