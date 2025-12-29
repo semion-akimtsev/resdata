@@ -1205,6 +1205,11 @@
       "args": "const fault_block_type *block"
     },
     {
+      "ret": "int",
+      "name": "fault_block_get_size",
+      "args": "const fault_block_type *fault_block"
+    },
+    {
       "ret": "void",
       "name": "fault_block_assign_to_region",
       "args": "fault_block_type *fault_block, int region_id"

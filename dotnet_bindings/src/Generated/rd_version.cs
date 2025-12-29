@@ -1,6 +1,7 @@
 // Auto-generated from ert\util\rd_version.hpp
 using System;
 using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 
 namespace Resdata.Bindings.Generated {
     public static class Native_rd_version {
