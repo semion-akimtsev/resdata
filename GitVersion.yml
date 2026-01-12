@@ -1,0 +1,18 @@
+mode: Mainline
+tag-prefix: '[vV]?'
+branches:
+  main:
+    increment: Minor
+    prevent-increment-of-merged-branch-version: true
+    track-merge-target: true
+  feature:
+    regex: features?[/-]
+    increment: Minor
+  hotfix:
+    regex: hotfix(es)?[/-]
+    increment: Patch
+  release:
+    regex: ^releases?[/-]
+    increment: Patch
+ignore:
+  sha: []

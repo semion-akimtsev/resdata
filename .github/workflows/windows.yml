@@ -43,6 +43,17 @@ jobs:
         python.exe -m pip install --upgrade pip
         python.exe -m pip install --upgrade conan
 
+    - name: Determine version via GitVersion
+      uses: gittools/actions/gitversion@v5
+      id: gitversion
+      with:
+        useConfigFile: true
+
+    - name: Export RD_VERSION for native build
+      shell: pwsh
+      run: |
+        Add-Content -Path $env:GITHUB_ENV -Value "RD_VERSION=${{ steps.gitversion.outputs.MajorMinorPatch }}"
+
     - name: Build
       run: |
         ./build.ps1
@@ -77,21 +88,45 @@ jobs:
         }
         Copy-Item -Path (Join-Path $src '*') -Destination dotnet_bindings/src/runtimes/win-x64/native -Force
 
+    - name: Write version info into dotnet project (for packaging)
+      shell: pwsh
+      env:
+        NV2: ${{ steps.gitversion.outputs.NuGetVersionV2 }}
+        FULL: ${{ steps.gitversion.outputs.FullSemVer }}
+        COMMIT: ${{ steps.gitversion.outputs.CommitId }}
+        BRANCH: ${{ steps.gitversion.outputs.BranchName }}
+      run: |
+        $out = 'dotnet_bindings/src/VersionInfo.json'
+        $obj = @{
+          version = $env:NV2
+          fullSemVer = $env:FULL
+          commit = $env:COMMIT
+          branch = $env:BRANCH
+          generatedUtc = (Get-Date).ToString('o')
+        }
+        $json = $obj | ConvertTo-Json -Depth 5
+        $dir = Split-Path $out -Parent
+        if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
+        $json | Out-File -FilePath $out -Encoding utf8
+        Write-Host "Wrote version info to $out"
+
     - name: Pack generated bindings (NuGet)
       run: |
-        dotnet pack dotnet_bindings/src/ResdataBindings.csproj -c Release -o dotnet_bindings/artifacts /p:PackageVersion=0.0.0-ci
+        dotnet pack dotnet_bindings/src/ResdataBindings.csproj -c Release -o dotnet_bindings/artifacts /p:PackageVersion=${{ steps.gitversion.outputs.NuGetVersionV2 }} /p:RepositoryCommit=${{ steps.gitversion.outputs.CommitId }} /p:RepositoryUrl=https://github.com/${{ github.repository }}
 
-    - name: Ensure GitHub Packages PAT is set
+    - name: Ensure GitHub Packages PAT is set (tags only)
+      if: ${{ startsWith(github.ref, 'refs/tags/') }}
       shell: pwsh
       env:
         NUGET_PAT: ${{ secrets.NUGET_PAT }}
       run: |
         if (-not $env:NUGET_PAT) {
-          Write-Error "Secret NUGET_PAT is required to publish the NuGet package to this repository's feed; aborting"
+          Write-Error "Secret NUGET_PAT is required to publish the NuGet package to this repository's feed on tags; aborting"
           exit 1
         }
 
-    - name: Publish NuGet package to GitHub Packages
+    - name: Publish NuGet package to GitHub Packages (tags only)
+      if: ${{ startsWith(github.ref, 'refs/tags/') && secrets.NUGET_PAT != '' }}
       shell: pwsh
       env:
         NUGET_PAT: ${{ secrets.NUGET_PAT }}
