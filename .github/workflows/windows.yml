@@ -94,7 +94,7 @@ jobs:
     - name: Write version info into dotnet project (for packaging)
       shell: pwsh
       env:
-        VERSION: ${{ steps.gitversion.outputs.majorMinorPatch }}
+        VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
         FULL: ${{ steps.gitversion.outputs.fullSemVer }}
         COMMIT: ${{ steps.gitversion.outputs.sha }}
         BRANCH: ${{ steps.gitversion.outputs.branchName }}
@@ -115,7 +115,7 @@ jobs:
 
     - name: Pack generated bindings (NuGet)
       run: |
-        dotnet pack dotnet_bindings/src/ResdataBindings.csproj -c Release -o dotnet_bindings/artifacts /p:PackageVersion=${{ steps.gitversion.outputs.majorMinorPatch }} /p:RepositoryCommit=${{ steps.gitversion.outputs.sha }} /p:RepositoryUrl=https://github.com/${{ github.repository }}
+        dotnet pack dotnet_bindings/src/ResdataBindings.csproj -c Release -o dotnet_bindings/artifacts /p:PackageVersion=${{ steps.gitversion.outputs.fullSemVer }} /p:RepositoryCommit=${{ steps.gitversion.outputs.sha }} /p:RepositoryUrl=https://github.com/${{ github.repository }}
 
     - name: Ensure GitHub Packages PAT is set (tags only)
       if: ${{ startsWith(github.ref, 'refs/tags/') }}

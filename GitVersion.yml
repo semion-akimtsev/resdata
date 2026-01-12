@@ -1,10 +1,9 @@
-mode: Mainline
+mode: ContinuousDelivery
 tag-prefix: '[vV]?'
 branches:
   main:
+    regex: ^main$
     increment: Minor
-    prevent-increment-of-merged-branch-version: true
-    track-merge-target: true
   feature:
     regex: features?[/-]
     increment: Minor
