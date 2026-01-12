@@ -14,6 +14,12 @@ on:
      - main
      - 'version-**'
  workflow_dispatch:
+   inputs:
+     publish_nuget:
+       description: 'Publish NuGet package for manual runs (true/false)'
+       required: false
+       default: false
+       type: boolean
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -117,19 +123,19 @@ jobs:
       run: |
         dotnet pack dotnet_bindings/src/ResdataBindings.csproj -c Release -o dotnet_bindings/artifacts /p:PackageVersion=${{ steps.gitversion.outputs.fullSemVer }} /p:RepositoryCommit=${{ steps.gitversion.outputs.sha }} /p:RepositoryUrl=https://github.com/${{ github.repository }}
 
-    - name: Ensure GitHub Packages PAT is set (tags only)
-      if: ${{ startsWith(github.ref, 'refs/tags/') }}
+    - name: Ensure GitHub Packages PAT is set (tags or manual publish)
+      if: ${{ startsWith(github.ref, 'refs/tags/') || (github.event_name == 'workflow_dispatch' && github.event.inputs.publish_nuget == 'true') }}
       shell: pwsh
       env:
         NUGET_PAT: ${{ secrets.NUGET_PAT }}
       run: |
         if (-not $env:NUGET_PAT) {
-          Write-Error "Secret NUGET_PAT is required to publish the NuGet package to this repository's feed on tags; aborting"
+          Write-Error "Secret NUGET_PAT is required to publish the NuGet package to this repository's feed; aborting"
           exit 1
         }
 
-    - name: Publish NuGet package to GitHub Packages (tags only)
-      if: ${{ startsWith(github.ref, 'refs/tags/') }}
+    - name: Publish NuGet package to GitHub Packages (tags or manual publish)
+      if: ${{ startsWith(github.ref, 'refs/tags/') || (github.event_name == 'workflow_dispatch' && github.event.inputs.publish_nuget == 'true') }}
       shell: pwsh
       env:
         NUGET_PAT: ${{ secrets.NUGET_PAT }}
