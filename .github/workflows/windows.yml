@@ -143,7 +143,7 @@ jobs:
       run: |
         Write-Host "Publishing NuGet package(s) to GitHub Packages for owner: $env:GITHUB_OWNER"
         # ensure a source exists (ignore if already present)
-        dotnet nuget add source "https://nuget.pkg.github.com/$env:GITHUB_OWNER/index.json" --name "github" --username $env:GITHUB_OWNER --password $env:NUGET_PAT --store-password-in-clear-text -NonInteractive -Force || Write-Host "nuget source add may have failed (already present)"
+        dotnet nuget add source "https://nuget.pkg.github.com/$env:GITHUB_OWNER/index.json" --name "github" --username $env:GITHUB_OWNER --password $env:NUGET_PAT --store-password-in-clear-text || Write-Host "nuget source add may have failed (already present)"
         $pkgs = Get-ChildItem -Path dotnet_bindings/artifacts -Filter '*.nupkg'
         if ($pkgs.Count -eq 0) { Write-Error "No nupkg found to publish"; exit 1 }
         foreach ($p in $pkgs) {
