@@ -35,5 +35,6 @@ output/
 bin/
 obj/
 artifacts/
+Generated/
 
 *.log

@@ -4,28 +4,5 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
-    <!-- Package metadata -->
-    <PackageId>resdata.bindings</PackageId>
-    <Version>0.0.0-ci</Version>
-    <Authors>resdata</Authors>
-    <Description>Auto-generated C# bindings and bundled native libresdata library</Description>
   </PropertyGroup>
-
-  <!-- Include any files under runtimes/ in the nupkg preserving the runtimes layout -->
-  <ItemGroup>
-    <None Include="runtimes\**\*">
-      <Pack>true</Pack>
-      <PackagePath>runtimes\%(RecursiveDir)</PackagePath>
-    </None>
-  </ItemGroup>
-
-  <!-- Include generated version info inside the package under contentFiles so consumers can read embedded version metadata -->
-  <ItemGroup>
-    <None Include="VersionInfo.json" Condition="Exists('VersionInfo.json')">
-      <Pack>true</Pack>
-      <PackagePath>contentFiles\any\any\</PackagePath>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>
