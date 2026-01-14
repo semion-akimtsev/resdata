@@ -364,31 +364,6 @@ for header, funcs in manifest.items():
         fh.write('    }\n')
         fh.write('}\n')
 
-# write csproj and Program.cs
-os.makedirs(PROJECT_DIR, exist_ok=True)
-csproj = os.path.join(PROJECT_DIR, 'ResdataBindings.csproj')
-with open(csproj, 'w', encoding='utf-8') as fh:
-    fh.write('<Project Sdk="Microsoft.NET.Sdk">\n')
-    fh.write('  <PropertyGroup>\n')
-    fh.write('    <OutputType>Exe</OutputType>\n')
-    fh.write('    <TargetFramework>net9.0</TargetFramework>\n')
-    fh.write('    <ImplicitUsings>enable</ImplicitUsings>\n')
-    fh.write('    <Nullable>enable</Nullable>\n')
-    fh.write('  </PropertyGroup>\n')
-    fh.write('</Project>\n')
-
-prog = os.path.join(PROJECT_DIR, 'Program.cs')
-with open(prog, 'w', encoding='utf-8') as fh:
-    fh.write('using System;\nusing Resdata.Bindings.Generated;\n\n')
-    fh.write('class Program {\n    static void Main() {\n')
-    # call ExecuteAll on each generated class
-    for header, funcs in manifest.items():
-        base = os.path.basename(header)
-        name = os.path.splitext(base)[0]
-        cls_name = 'Native_' + re.sub(r'[^A-Za-z0-9_]', '_', name)
-        fh.write('        try {{ {}.ExecuteAll(); }} catch(Exception ex) {{ Console.WriteLine("{} ExecuteAll failed: " + ex.Message); }}\n'.format('Resdata.Bindings.Generated.' + cls_name, cls_name))
-    fh.write('    }\n}\n')
-
 # emit SafeHandle helper types
 if safe_handles:
     # collect free/destroy/unref function candidates across headers
