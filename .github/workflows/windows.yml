@@ -133,7 +133,7 @@ jobs:
         if ($pkgs.Count -eq 0) { Write-Error "No nupkg found to publish"; exit 1 }
         foreach ($p in $pkgs) {
           Write-Host "Pushing $($p.FullName)"
-          dotnet nuget push $p.FullName --source "https://nuget.pkg.github.com/$env:GITHUB_OWNER/index.json" --api-key $env:NUGET_PAT --skip-duplicate
+          dotnet nuget push $p.FullName --source "https://nuget.pkg.github.com/$env:GITHUB_OWNER/index.json" --api-key $env:NUGET_PAT
         }
 
     - name: Upload artifacts
