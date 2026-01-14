@@ -7,17 +7,12 @@ branches:
     increment: Minor
   feature:
     regex: features?[/-]
-    increment: Minor
-  hotfix:
-    regex: hotfix(es)?[/-]
     increment: Patch
-  release:
-    regex: ^releases?[/-]
-    increment: Patch
+    label: feature
   pull-request:
     # Match GitHub/Git refs for pull requests (pull/{number}/merge or pull/{number}/head) 
     regex: ^pull/(?:\d+)(?:/merge|/head)?$
     increment: Patch
-    label: pre
+    label: pull-request
 ignore:
   sha: []
