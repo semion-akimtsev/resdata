@@ -12,5 +12,5 @@ mkdir $OUTPUT_DIR
 Set-Location $OUTPUT_DIR
 
 cmake .. -A $ARCHITECTURE -G $GENERATOR
-cmake --build . --config $CONFIG
+cmake --build . --config $CONFIG -- /verbosity:detailed
 Set-Location ..
