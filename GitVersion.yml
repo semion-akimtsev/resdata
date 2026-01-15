@@ -1,6 +1,6 @@
 workflow: GitHubFlow/v1
 mode: ContinuousDeployment
-tag-prefix: '[vV]?'
+tag-prefix: ''
 branches:
   main:
     regex: ^main$
