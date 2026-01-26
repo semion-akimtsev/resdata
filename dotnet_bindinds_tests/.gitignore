@@ -1,0 +1,17 @@
+## .NET build artifacts
+bin/
+obj/
+*.user
+*.suo
+*.cache
+
+## Test results
+TestResults/
+*.trx
+*.coverage
+
+## IDE files
+.vs/
+.vscode/
+*.swp
+*~
