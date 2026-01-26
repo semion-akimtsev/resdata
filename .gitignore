@@ -38,3 +38,5 @@ artifacts/
 Generated/
 
 *.log
+# Generated .NET bindings
+dotnet_bindings/src/Generated/
