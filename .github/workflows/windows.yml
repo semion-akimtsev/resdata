@@ -78,7 +78,9 @@ jobs:
         # Create output directory for SWIG bindings
         New-Item -ItemType Directory -Path "swig" -Force | Out-Null
         
-        # Run SWIG to generate C# bindings
+        # Run SWIG to generate C# bindings from C++ headers
+        # This generates C# interface files and a C++ wrapper file (resdata_wrap.cxx)
+        # Note: The generated bindings are not currently integrated into the build
         # Include paths for the header files
         swig -csharp -c++ -I"lib/include" -outdir swig -o swig/resdata_wrap.cxx resdata.i
         
