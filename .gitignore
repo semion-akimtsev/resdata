@@ -38,3 +38,7 @@ artifacts/
 Generated/
 
 *.log
+
+# SWIG generated bindings
+/swig/
+
