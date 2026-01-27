@@ -30,8 +30,14 @@
   </ItemGroup>
 
   <!-- Copy native libraries to output for tests (Windows only) -->
-  <ItemGroup Condition="'$(IsWindows)' == 'true'">
-    <None Include="..\..\output\lib\Release\**\*.*" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Condition="Exists('..\..\output\lib\Release')" />
-  </ItemGroup>
+  <!-- Use a target to copy files after build to ensure they're available at runtime -->
+  <Target Name="CopyNativeLibraries" AfterTargets="Build" Condition="'$(IsWindows)' == 'true' and Exists('..\..\output\lib\Release')">
+    <ItemGroup>
+      <NativeLibs Include="..\..\output\lib\Release\**\*.dll" />
+      <NativeLibs Include="..\..\output\lib\Release\**\*.pdb" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NativeLibs)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    <Message Text="Copied native libraries to $(OutputPath)" Importance="high" />
+  </Target>
 
 </Project>
