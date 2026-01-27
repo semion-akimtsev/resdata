@@ -6,6 +6,9 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <!-- Allow tests to run on any platform, but library loading will only work on Windows -->
+    <IsWindows Condition="'$(OS)' == 'Windows_NT'">true</IsWindows>
+    <IsWindows Condition="'$(OS)' != 'Windows_NT'">false</IsWindows>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,14 +24,19 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- Reference the bindings project which includes the native library -->
+  <!-- Reference the bindings project only on Windows where it can build -->
+  <ItemGroup Condition="'$(IsWindows)' == 'true'">
     <ProjectReference Include="..\dotnet_bindings\src\ResdataBindings.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Include all generated bindings directly for testing -->
     <Compile Include="..\dotnet_bindings\src\Generated\*.cs" Link="Generated\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- Copy native libraries to output for tests (Windows only) -->
+  <ItemGroup Condition="'$(IsWindows)' == 'true'">
+    <None Include="..\..\output\lib\Release\**\*.*" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Condition="Exists('..\..\output\lib\Release')" />
   </ItemGroup>
 
 </Project>
