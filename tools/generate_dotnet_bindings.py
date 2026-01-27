@@ -11,8 +11,25 @@ SRC_DIR = os.path.join(OUT_ROOT, 'src', 'Generated')
 PROJECT_DIR = os.path.join(OUT_ROOT, 'src')
 os.makedirs(SRC_DIR, exist_ok=True)
 
-# simple regex for C prototypes (crude but works for common cases)
-proto_re = re.compile(r"^\s*([A-Za-z_][A-Za-z0-9_\s\*]+?)\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(([^;{]*)\)\s*;\s*$")
+# Function to parse a C prototype line
+def parse_prototype(line):
+    """Parse a C function prototype and return (return_type, function_name, args) or None"""
+    # Remove trailing semicolon and whitespace
+    cleaned = line.strip().rstrip(';').strip()
+    
+    # Find the pattern: identifier( where identifier is the function name
+    # We want the LAST occurrence (the actual function name, not a type name)
+    match = re.search(r'\b([A-Za-z_][A-Za-z0-9_]*)\s*\((.+)\)$', cleaned)
+    if match:
+        func_name = match.group(1)
+        args = match.group(2).strip()
+        
+        # Everything before the function name is the return type
+        ret_end = match.start(1)
+        ret_type = cleaned[:ret_end].strip()
+        
+        return (ret_type, func_name, args)
+    return None
 
 manifest = {}
 
@@ -25,12 +42,28 @@ c_to_cs = {
 # collect SafeHandle types to emit
 safe_handles = set()
 
+# Helper to clean C++ type names for C# SafeHandle generation
+def clean_typename(typename):
+    """Remove C++ namespace syntax and clean up type name for C# usage"""
+    # Remove namespace qualifiers (rd::smspec_node -> smspec_node)
+    if '::' in typename:
+        typename = typename.split('::')[-1]
+    return typename
+
 # helper to map arg
 
 def map_arg(a, idx=0):
     a = a.strip()
     if not a or a=='void':
         return None
+    
+    # Strip array dimensions from parameter names: xcoords[2] -> xcoords
+    a = re.sub(r'\[(\d+)\]', '', a)
+    
+    # Skip C++ references - cannot be marshaled
+    if '&' in a and not ('&&' in a):  # Skip single & but allow &&
+        return None
+    
     parts = a.split()
     # if only a type (no name) or last token is a type-like token, generate placeholder name
     last = parts[-1]
@@ -43,7 +76,11 @@ def map_arg(a, idx=0):
         # char* => string
         if 'char' in a:
             name = ('p{}'.format(idx)) if not has_name else parts[-1].strip('*')
-            csharp_keywords = {'string','int','float','double','bool','long','object','decimal','char'}
+            csharp_keywords = {'string','int','float','double','bool','long','object','decimal','char',
+                               'base','monitor','event','delegate','namespace','class','struct','interface',
+                               'public','private','protected','internal','abstract','sealed','static',
+                               'virtual','override','readonly','const','new','this','typeof','sizeof',
+                               'checked','unchecked','default','lock','params','ref','out','in','is','as'}
             if name in csharp_keywords:
                 name = '@' + name
             return ('string', name, False)
@@ -60,7 +97,11 @@ def map_arg(a, idx=0):
             typ = toks[0]
             nm = ('p{}'.format(idx)) if not has_name else toks[-1]
         nm = ('p{}'.format(idx)) if not has_name else nm
-        csharp_keywords = {'string','int','float','double','bool','long','object','decimal','char'}
+        csharp_keywords = {'string','int','float','double','bool','long','object','decimal','char',
+                           'base','monitor','event','delegate','namespace','class','struct','interface',
+                           'public','private','protected','internal','abstract','sealed','static',
+                           'virtual','override','readonly','const','new','this','typeof','sizeof',
+                           'checked','unchecked','default','lock','params','ref','out','in','is','as'}
         if nm in csharp_keywords:
             nm = '@' + nm
         prims = {'int':'int','double':'double','float':'float','long':'long','size_t':'nuint','unsigned int':'uint','uint32_t':'uint'}
@@ -72,7 +113,7 @@ def map_arg(a, idx=0):
                 return ('out ' + prims[typ], nm, True)
         # named opaque pointer -> SafeHandle
         tokens = typ.split()
-        typename = tokens[-1]
+        typename = clean_typename(tokens[-1])
         safe_name = 'Safe' + ''.join([p.capitalize() for p in typename.split('_')]) + 'Handle'
         safe_handles.add(safe_name)
         return (safe_name, nm, False)
@@ -80,7 +121,11 @@ def map_arg(a, idx=0):
     typ = ' '.join(parts[:-1]) if len(parts)>1 else parts[0]
     name = ('p{}'.format(idx)) if not has_name else parts[-1]
     # escape C# keywords used as identifiers
-    csharp_keywords = {'string','int','float','double','bool','long','object','decimal','char'}
+    csharp_keywords = {'string','int','float','double','bool','long','object','decimal','char',
+                       'base','monitor','event','delegate','namespace','class','struct','interface',
+                       'public','private','protected','internal','abstract','sealed','static',
+                       'virtual','override','readonly','const','new','this','typeof','sizeof',
+                       'checked','unchecked','default','lock','params','ref','out','in','is','as'}
     if name in csharp_keywords:
         name = '@' + name
     return (c_to_cs.get(typ, 'IntPtr'), name, False)
@@ -88,6 +133,9 @@ def map_arg(a, idx=0):
 for dp, dn, fnames in os.walk(INCLUDE_DIR):
     for fname in fnames:
         if not fname.endswith('.hpp'):
+            continue
+        # Skip pure macro definition files
+        if fname == 'type_macros.hpp':
             continue
         path = os.path.join(dp, fname)
         with open(path, 'r', encoding='utf-8') as fh:
@@ -106,16 +154,61 @@ for dp, dn, fnames in os.walk(INCLUDE_DIR):
                     depth -= 1
                 i += 1
             block = txt[start:i-1]
-            seen = set()
+            
+            # Pre-process block to join multi-line declarations
+            # Combine lines that are part of a function declaration
+            lines = []
+            current_line = ""
             for line in block.splitlines():
+                stripped = line.strip()
+                if not stripped or stripped.startswith('//'):
+                    if current_line:
+                        lines.append(current_line)
+                        current_line = ""
+                    continue
+                # If line ends with semicolon, it's complete
+                if stripped.endswith(';'):
+                    current_line += " " + stripped
+                    lines.append(current_line.strip())
+                    current_line = ""
+                # If current_line is empty and this looks like start of declaration
+                elif not current_line and (re.match(r'^[A-Za-z_]', stripped) or stripped.startswith('const ')):
+                    current_line = stripped
+                # Continue multi-line declaration
+                elif current_line:
+                    current_line += " " + stripped
+                else:
+                    # Standalone line (typedef, etc)
+                    lines.append(stripped)
+            if current_line:
+                lines.append(current_line)
+            
+            seen = set()
+            for line in lines:
                 line = line.strip()
                 if not line or line.startswith('//'):
                     continue
-                pm = proto_re.match(line)
-                if pm:
-                    ret, name, args = pm.groups()
+                # Skip preprocessor directives (macros, includes, etc)
+                if line.startswith('#'):
+                    continue
+                # Skip lines with backslashes (escaped chars or line continuations)
+                if '\\' in line:
+                    continue
+                # Skip lines with ## (macro token pasting operator)
+                if '##' in line:
+                    continue
+                # Skip lines with /* or */ (comment markers)
+                if '/*' in line or '*/' in line:
+                    continue
+                
+                parsed = parse_prototype(line)
+                if parsed:
+                    ret, name, args = parsed
                     # skip typedefs and function pointer typedefs
                     if 'typedef' in ret or '(' in ret or '(' in name or ')' in name:
+                        continue
+                    # Skip uppercase names (likely macros)
+                    if name.isupper() or '_HEADER' in name or '_OP' in name:
                         continue
                     # skip C keywords as function names
                     C_KEYWORDS = {'double','int','float','char','void','bool','struct','union','typedef'}
@@ -127,6 +220,12 @@ for dp, dn, fnames in os.walk(INCLUDE_DIR):
 
                     # compute mapped param types to deduplicate overloads that only differ in argument names
                     arg_items = [s.strip() for s in args.split(',')] if args and args!='void' else []
+                    
+                    # Check for function pointer parameters (contains '(')
+                    has_func_ptr = any('(' in arg for arg in arg_items)
+                    if has_func_ptr:
+                        continue
+                    
                     mapped_types = []
                     for idx, a in enumerate(arg_items):
                         mapped = map_arg(a, idx)
@@ -140,72 +239,6 @@ for dp, dn, fnames in os.walk(INCLUDE_DIR):
         if funcs:
             rel = os.path.relpath(path, INCLUDE_DIR)
             manifest[rel] = funcs
-
-# helper mappings
-c_to_cs = {
-    'int':'int', 'double':'double', 'float':'float', 'void':'void',
-    'const char *':'string', 'char *':'string', 'bool':'bool', 'time_t':'long', 'size_t':'nuint'
-}
-
-# helper to map arg
-
-def map_arg(a, idx=0):
-    a = a.strip()
-    if not a or a=='void':
-        return None
-    parts = a.split()
-    # if only a type (no name) or last token is a type-like token, generate placeholder name
-    last = parts[-1]
-    type_like_tokens = set(['int','double','float','char','const','bool','void','size_t'])
-    has_name = True
-    if len(parts) == 1 or last in type_like_tokens or last == '*' or last.endswith('*'):
-        has_name = False
-    # handle pointer types
-    if '*' in a:
-        # char* => string
-        if 'char' in a:
-            name = ('p{}'.format(idx)) if not has_name else parts[-1].strip('*')
-            csharp_keywords = {'string','int','float','double','bool','long','object','decimal','char'}
-            if name in csharp_keywords:
-                name = '@' + name
-            return ('string', name, False)
-        # otherwise inspect the base type
-        base = a.replace('const','').replace('*','').strip()
-        # try to extract type and name (if present)
-        m = re.match(r'(.+?)\s+(\w+)$', base)
-        if m:
-            typ = m.group(1).strip()
-            nm = m.group(2).strip()
-        else:
-            # fallback: no name present
-            toks = base.split()
-            typ = toks[0]
-            nm = ('p{}'.format(idx)) if not has_name else toks[-1]
-        nm = ('p{}'.format(idx)) if not has_name else nm
-        csharp_keywords = {'string','int','float','double','bool','long','object','decimal','char'}
-        if nm in csharp_keywords:
-            nm = '@' + nm
-        prims = {'int':'int','double':'double','float':'float','long':'long','size_t':'nuint','unsigned int':'uint','uint32_t':'uint'}
-        if typ in prims:
-            # primitive pointer: if const -> treat as IntPtr (input array), else treat as out param
-            if 'const' in a:
-                return ('IntPtr', nm, False)
-            else:
-                return ('out ' + prims[typ], nm, True)
-        # named opaque pointer -> SafeHandle
-        tokens = typ.split()
-        typename = tokens[-1]
-        safe_name = 'Safe' + ''.join([p.capitalize() for p in typename.split('_')]) + 'Handle'
-        safe_handles.add(safe_name)
-        return (safe_name, nm, False)
-    # non-pointer types
-    typ = ' '.join(parts[:-1]) if len(parts)>1 else parts[0]
-    name = ('p{}'.format(idx)) if not has_name else parts[-1]
-    # escape C# keywords used as identifiers
-    csharp_keywords = {'string','int','float','double','bool','long','object','decimal','char'}
-    if name in csharp_keywords:
-        name = '@' + name
-    return (c_to_cs.get(typ, 'IntPtr'), name, False)
 
 # emit cs files per header
 for header, funcs in manifest.items():
@@ -240,7 +273,7 @@ for header, funcs in manifest.items():
                 else:
                     base = ret_clean.replace('const','').replace('*','').strip()
                     tokens = base.split()
-                    typename = tokens[-1]
+                    typename = clean_typename(tokens[-1])
                     ret_cs = 'Safe' + ''.join([p.capitalize() for p in typename.split('_')]) + 'Handle'
                     safe_handles.add(ret_cs)
                     # make return nullable (SafeHandles are reference-like)
@@ -291,10 +324,10 @@ if safe_handles:
             with open(path, 'r', encoding='utf-8') as fh:
                 txt = fh.read()
             for line in txt.splitlines():
-                pm = proto_re.match(line.strip())
-                if not pm:
+                parsed = parse_prototype(line.strip())
+                if not parsed:
                     continue
-                retf, namef, argsf = pm.groups()
+                retf, namef, argsf = parsed
                 if re.search(r'(_free__|_free|_destroy|_unref|_release)$', namef):
                     args_items = [s.strip() for s in argsf.split(',') if s.strip()]
                     first_arg = args_items[0] if args_items else ''
