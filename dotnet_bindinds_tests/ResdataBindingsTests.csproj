@@ -29,15 +29,19 @@
     <Compile Include="..\dotnet_bindings\src\Generated\*.cs" Link="Generated\%(Filename)%(Extension)" />
   </ItemGroup>
 
-  <!-- Copy native libraries to output for tests (Windows only) -->
-  <!-- Use a target to copy files after build to ensure they're available at runtime -->
-  <Target Name="CopyNativeLibraries" AfterTargets="Build" Condition="'$(IsWindows)' == 'true' and Exists('..\..\output\lib\Release')">
+  <!-- Copy native libraries from bindings output directory (where they should be after building bindings project) -->
+  <Target Name="CopyNativeLibraries" AfterTargets="Build" Condition="'$(IsWindows)' == 'true'">
     <ItemGroup>
-      <NativeLibs Include="..\..\output\lib\Release\**\*.dll" />
-      <NativeLibs Include="..\..\output\lib\Release\**\*.pdb" />
+      <!-- First try from the bindings project output (built in Release mode in CI) -->
+      <NativeLibsFromBindings Include="..\dotnet_bindings\src\bin\Release\net9.0-windows\*.dll" />
+      <NativeLibsFromBindings Include="..\dotnet_bindings\src\bin\Release\net9.0-windows\*.pdb" />
+      <!-- Fallback to original output directory -->
+      <NativeLibsFromOutput Include="..\..\output\lib\Release\**\*.dll" Condition="!Exists('..\dotnet_bindings\src\bin\Release\net9.0-windows')" />
+      <NativeLibsFromOutput Include="..\..\output\lib\Release\**\*.pdb" Condition="!Exists('..\dotnet_bindings\src\bin\Release\net9.0-windows')" />
     </ItemGroup>
-    <Copy SourceFiles="@(NativeLibs)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
-    <Message Text="Copied native libraries to $(OutputPath)" Importance="high" />
+    <Copy SourceFiles="@(NativeLibsFromBindings)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" Condition="'@(NativeLibsFromBindings)' != ''" />
+    <Copy SourceFiles="@(NativeLibsFromOutput)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" Condition="'@(NativeLibsFromOutput)' != ''" />
+    <Message Text="Copied native libraries to test output: $(OutputPath)" Importance="high" Condition="'@(NativeLibsFromBindings)' != '' or '@(NativeLibsFromOutput)' != ''" />
   </Target>
 
 </Project>

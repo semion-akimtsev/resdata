@@ -10,4 +10,14 @@
     <None Include="..\..\output\lib\Release\**\*.*" Pack="true" PackagePath="runtimes/$(XRID)/native" />
   </ItemGroup>
 
+  <!-- Copy native libraries to output directory after build -->
+  <Target Name="CopyNativeLibrariesToOutput" AfterTargets="Build" Condition="Exists('..\..\output\lib\Release')">
+    <ItemGroup>
+      <NativeLibFiles Include="..\..\output\lib\Release\**\*.dll" />
+      <NativeLibFiles Include="..\..\output\lib\Release\**\*.pdb" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NativeLibFiles)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    <Message Text="Copied native libraries from output\lib\Release to $(OutputPath)" Importance="high" />
+  </Target>
+
 </Project>
