@@ -15,10 +15,44 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Include the native wrapper DLL -->
+    <!-- C++ wrapper source file -->
+    <NativeSource Include="../swig/resdata_wrap.cxx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Include the native wrapper DLL after it's built -->
     <None Include="../swig/resdata_swig_wrap.dll" Pack="true" PackagePath="runtimes/$(XRID)/native" Condition="Exists('../swig/resdata_swig_wrap.dll')" />
     <!-- Also include the resdata library dependencies -->
     <None Include="../output/lib/Release/**/*.*" Pack="true" PackagePath="runtimes/$(XRID)/native" />
   </ItemGroup>
+
+  <!-- Custom target to compile the SWIG C++ wrapper -->
+  <Target Name="CompileSwigWrapper" BeforeTargets="Build">
+    <PropertyGroup>
+      <SwigWrapperSource>$(MSBuildProjectDirectory)\..\swig\resdata_wrap.cxx</SwigWrapperSource>
+      <SwigWrapperOutput>$(MSBuildProjectDirectory)\..\swig\resdata_swig_wrap.dll</SwigWrapperOutput>
+      <ResdataLibPath>$(MSBuildProjectDirectory)\..\output\lib\Release</ResdataLibPath>
+      <IncludePath>$(MSBuildProjectDirectory)\..\lib\include</IncludePath>
+    </PropertyGroup>
+    
+    <Message Text="Compiling SWIG wrapper: $(SwigWrapperSource)" Importance="high" />
+    
+    <!-- Find resdata.lib -->
+    <ItemGroup>
+      <ResdataLibFiles Include="$(ResdataLibPath)\**\resdata.lib" />
+    </ItemGroup>
+    
+    <PropertyGroup>
+      <ResdataLib>@(ResdataLibFiles->'%(FullPath)')</ResdataLib>
+    </PropertyGroup>
+    
+    <Error Condition="'$(ResdataLib)' == ''" Text="Could not find resdata.lib in $(ResdataLibPath)" />
+    
+    <Message Text="Found resdata.lib at: $(ResdataLib)" Importance="high" />
+    
+    <!-- Compile with cl.exe -->
+    <Exec Command="cl.exe /LD /MD /EHsc /I&quot;$(IncludePath)&quot; /I&quot;$(ResdataLibPath)&quot; &quot;$(SwigWrapperSource)&quot; /link &quot;$(ResdataLib)&quot; /OUT:&quot;$(SwigWrapperOutput)&quot;"
+          WorkingDirectory="$(MSBuildProjectDirectory)\..\swig" />
+  </Target>
 
 </Project>
