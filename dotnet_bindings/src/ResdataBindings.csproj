@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Include all native binaries including DLLs, PDB files, and other artifacts -->
     <None Include="..\..\output\lib\Release\**\*.*" Pack="true" PackagePath="runtimes/$(XRID)/native" />
   </ItemGroup>
 
