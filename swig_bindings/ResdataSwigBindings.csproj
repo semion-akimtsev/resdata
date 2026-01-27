@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <XRID Condition="'$(XRID)' == ''">win-x64</XRID>
+    <PackageId>ResdataSwigBindings</PackageId>
+    <Description>SWIG-generated C# bindings for resdata library</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Include all generated C# files from swig directory -->
+    <Compile Include="../swig/*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Include the native wrapper DLL -->
+    <None Include="../swig/resdata_swig_wrap.dll" Pack="true" PackagePath="runtimes/$(XRID)/native" Condition="Exists('../swig/resdata_swig_wrap.dll')" />
+    <!-- Also include the resdata library dependencies -->
+    <None Include="../output/lib/Release/**/*.*" Pack="true" PackagePath="runtimes/$(XRID)/native" />
+  </ItemGroup>
+
+</Project>

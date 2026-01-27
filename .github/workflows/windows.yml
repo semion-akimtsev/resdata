@@ -80,12 +80,48 @@ jobs:
         
         # Run SWIG to generate C# bindings from C++ headers
         # This generates C# interface files and a C++ wrapper file (resdata_wrap.cxx)
-        # Note: The generated bindings are not currently integrated into the build
         # Include paths for the header files
         swig -csharp -c++ -I"lib/include" -outdir swig -o swig/resdata_wrap.cxx resdata.i
         
         Write-Host "SWIG C# bindings generated successfully in swig/"
         Get-ChildItem -Path swig
+
+    - name: Build SWIG generated wrapper DLL
+      shell: pwsh
+      run: |
+        # Set up Visual Studio environment
+        $vsPath = & "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath
+        Import-Module "$vsPath\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
+        Enter-VsDevShell -VsInstallPath $vsPath -SkipAutomaticLocation
+        
+        # Compile the SWIG wrapper into a DLL
+        Set-Location swig
+        
+        # Find resdata.lib
+        $resdataLib = (Get-ChildItem -Path ..\output\lib\Release -Filter "resdata.lib" -Recurse | Select-Object -First 1).FullName
+        if (-not $resdataLib) {
+          Write-Error "Could not find resdata.lib"
+          exit 1
+        }
+        
+        Write-Host "Found resdata.lib at: $resdataLib"
+        
+        # Compile with cl.exe
+        cl.exe /LD /MD /EHsc `
+          /I"..\lib\include" `
+          /I"..\output\lib\Release" `
+          resdata_wrap.cxx `
+          /link $resdataLib `
+          /OUT:resdata_swig_wrap.dll
+        
+        if ($LASTEXITCODE -ne 0) {
+          Write-Error "Failed to compile SWIG wrapper DLL"
+          exit 1
+        }
+        
+        Write-Host "SWIG wrapper DLL built successfully"
+        Get-ChildItem -Filter "*.dll"
+        Set-Location ..
 
     - name: Setup .NET 9 SDK
       uses: actions/setup-dotnet@v3
@@ -100,6 +136,11 @@ jobs:
       run: |
         dotnet restore dotnet_bindings/src/ResdataBindings.csproj
         dotnet build dotnet_bindings/src/ResdataBindings.csproj -c Release
+
+    - name: Build SWIG C# bindings project
+      run: |
+        dotnet restore swig_bindings/ResdataSwigBindings.csproj
+        dotnet build swig_bindings/ResdataSwigBindings.csproj -c Release
 
     - name: Write version info into dotnet project (for packaging)
       shell: pwsh

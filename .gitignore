@@ -41,4 +41,6 @@ Generated/
 
 # SWIG generated bindings
 /swig/
+/swig_bindings/bin/
+/swig_bindings/obj/
 
