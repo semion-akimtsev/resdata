@@ -6,12 +6,20 @@ This test suite validates that all generated .NET bindings in the `dotnet_bindin
 
 The tests are designed to:
 - Verify all generated P/Invoke bindings are properly structured
-- Confirm parameters are correctly marshalled between managed and native code
-- Validate return values are correctly consumed
+- Confirm the native library can be loaded at runtime
+- Validate that bindings can actually invoke native methods
+- Ensure parameters are correctly marshalled between managed and native code
+- Verify return values are correctly consumed
+- Confirm error handling works correctly
 - Ensure the binding generation process provides complete coverage of the native API
-- Make it easy to maintain tests as the native library evolves
+- Make it easy to maintain these tests when the native library evolves
 
 ## Test Design Philosophy
+
+### Integration Tests
+The test suite includes both structural validation and integration tests:
+- **Structural tests**: Verify binding structure, DllImport attributes, type mappings
+- **Integration tests**: Actually load and invoke the native library to ensure real functionality works
 
 ### No Function Names in Test Names
 Tests use reflection to discover and validate bindings dynamically, rather than naming individual functions. This makes the test suite resilient to changes in the native API.
@@ -40,8 +48,13 @@ This script:
 
 **Note:** In CI/CD, this script runs automatically on new branches and on merge to main.
 
-### 2. Build Native Library (Optional)
-To test actual invocation of the native library (not just marshalling), you need the compiled `libresdata` library:
+### 2. Build Native Library
+**Required for integration tests.** The tests verify actual invocation of the native library:
+
+**On Windows:**
+```powershell
+.\build.ps1
+```
 
 **On Linux/macOS:**
 ```bash
@@ -49,21 +62,18 @@ cmake -B build .
 cmake --build build
 ```
 
-**On Windows:**
-```powershell
-.\build.ps1
-```
-
 The native library will be placed in `output/lib/Release/` (Windows) or `build/lib/` (Linux/macOS).
+
+The test project references the `ResdataBindings` project, which packages the native library. When you build the test project, the native library is automatically copied to the output directory.
 
 ## Running the Tests
 
 ### Quick Test (Structure Only)
-Test the binding structure without requiring the native library:
+Test the binding structure without requiring native library invocation:
 
 ```bash
 cd dotnet_bindinds_tests
-dotnet test --filter "FullyQualifiedName~Coverage|FullyQualifiedName~Structure"
+dotnet test --filter "FullyQualifiedName~Coverage|FullyQualifiedName~BindingInvocationTests.AllBindingClassesAreStatic|FullyQualifiedName~BindingInvocationTests.AllBindingMethodsHaveDllImportAttribute"
 ```
 
 These tests validate:
@@ -80,12 +90,18 @@ cd dotnet_bindinds_tests
 dotnet test
 ```
 
-**Note:** Many tests will show expected exceptions when calling with null/zero arguments, as the native library validates its inputs. This is normal - the tests verify that marshalling works correctly, not that the native code succeeds with invalid inputs.
+Integration tests will:
+- Verify the native library can be loaded
+- Invoke native methods with sample parameters
+- Validate parameter marshalling works correctly
+- Ensure errors are properly handled and marshalled back to managed code
+
+**Note:** If the native library is not available, integration tests will report that the library could not be loaded. Structural tests will still pass.
 
 ## Test Categories
 
-### BindingInvocationTests
-Validates that bindings can be invoked and interact with the native library:
+### BindingInvocationTests (7 tests)
+Validates that bindings follow correct structure:
 - All binding classes are static
 - All methods have proper DllImport attributes
 - Type mappings are valid for P/Invoke
@@ -94,7 +110,7 @@ Validates that bindings can be invoked and interact with the native library:
 - SafeHandles are properly defined
 - String parameters use correct character encoding
 
-### ParameterMarshallingTests
+### ParameterMarshallingTests (5 tests)
 Verifies parameter marshalling between managed and native code:
 - Integer parameters are correctly marshalled
 - Floating-point parameters are correctly marshalled
@@ -102,7 +118,7 @@ Verifies parameter marshalling between managed and native code:
 - Return values are correctly marshalled
 - SafeHandle parameters represent native pointers correctly
 
-### BindingCoverageTests
+### BindingCoverageTests (5 tests)
 Ensures complete coverage and maintainability:
 - All manifest functions have corresponding bindings
 - Binding classes correspond to header files
@@ -110,13 +126,21 @@ Ensures complete coverage and maintainability:
 - Substantial function coverage exists
 - SafeHandle types exist for resource management
 
+### LibraryIntegrationTests (4 tests) - **New**
+Validates actual library loading and invocation:
+- Native library can be loaded by the runtime
+- Bindings can successfully invoke the native library
+- Parameter marshalling works correctly for different data types
+- Errors from the native library are properly handled
+
 ## CI/CD Integration
 
-In continuous integration:
+In continuous integration (Windows workflow):
 
-1. **Binding Generation**: `python tools/generate_dotnet_bindings.py` runs automatically
-2. **Build Native Library**: CMake compiles `libresdata`
-3. **Run Tests**: `dotnet test` validates bindings
+1. **Build Native Library**: CMake/PowerShell compiles `libresdata`
+2. **Binding Generation**: `python tools/generate_dotnet_bindings.py` runs automatically
+3. **Build Bindings**: `dotnet build` compiles the bindings project with native library
+4. **Run Tests**: `dotnet test` validates both structure and integration
 
 The test suite will automatically validate any new functions added to the native library, ensuring bindings stay in sync.
 
@@ -126,12 +150,19 @@ The test suite will automatically validate any new functions added to the native
 Run the binding generator first: `python tools/generate_dotnet_bindings.py`
 
 ### "DllNotFoundException: Unable to load DLL 'libresdata'"
-The native library isn't built or isn't in the search path. Either:
+The native library isn't built or isn't in the correct location. Solutions:
 - Build the native library (see Prerequisites)
+- Ensure the ResdataBindings project is built (which copies the native library)
 - Run only structure tests: `dotnet test --filter "FullyQualifiedName~Coverage"`
 
-### "Many tests show exceptions"
-This is expected. Tests invoke functions with null/zero arguments to verify marshalling. The native library correctly rejects invalid inputs, which the tests catch and log.
+### "Library not found" in integration tests
+Integration tests require the native library. If you see "Native library not available" messages:
+- Build the native library first: `.\build.ps1` (Windows) or `cmake --build build` (Linux/macOS)
+- Ensure the `output/lib/Release` directory contains the native library files
+- Rebuild the ResdataBindings project: `dotnet build dotnet_bindings/src/ResdataBindings.csproj -c Release`
+
+### Tests show "Expected error: Access violation"
+This is normal. Integration tests invoke methods with null/zero arguments to verify marshalling. The native library correctly rejects invalid inputs, which the tests catch and verify as expected behavior.
 
 ## Adding New Native Functions
 
@@ -140,6 +171,7 @@ When the native library adds new functions:
 1. The Python generator will automatically create bindings (in CI)
 2. Tests will automatically discover and validate the new bindings
 3. Coverage tests will verify the new functions are included
-4. No manual test updates are needed
+4. Integration tests will attempt to invoke the new functions
+5. No manual test updates are needed
 
 This design ensures the test suite remains maintainable as the library evolves.

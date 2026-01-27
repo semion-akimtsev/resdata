@@ -22,6 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Reference the bindings project which includes the native library -->
+    <ProjectReference Include="..\dotnet_bindings\src\ResdataBindings.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- Include all generated bindings directly for testing -->
     <Compile Include="..\dotnet_bindings\src\Generated\*.cs" Link="Generated\%(Filename)%(Extension)" />
   </ItemGroup>

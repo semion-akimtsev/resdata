@@ -108,6 +108,21 @@ jobs:
       run: |
         dotnet pack dotnet_bindings/src/ResdataBindings.csproj -c Release -o dotnet_bindings/artifacts /p:XRID=${{ env.XRID }} /p:PackageVersion=${{ steps.gitversion.outputs.fullSemVer }} /p:RepositoryCommit=${{ steps.gitversion.outputs.sha }} /p:RepositoryUrl=https://github.com/${{ github.repository }}
 
+    - name: Build and run .NET binding tests
+      run: |
+        dotnet restore dotnet_bindinds_tests/ResdataBindingsTests.csproj
+        dotnet build dotnet_bindinds_tests/ResdataBindingsTests.csproj -c Release
+        dotnet test dotnet_bindinds_tests/ResdataBindingsTests.csproj -c Release --no-build --logger "trx;LogFileName=test-results.trx" --logger "console;verbosity=detailed"
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: dotnet_bindinds_tests/TestResults/*.trx
+        if-no-files-found: ignore
+        retention-days: 30
+
     - name: Ensure GitHub Packages PAT is set (tags or manual publish)
       if: ${{ startsWith(github.ref, 'refs/tags/') || (github.event_name == 'workflow_dispatch' && github.event.inputs.publish_nuget == 'true') }}
       shell: pwsh
