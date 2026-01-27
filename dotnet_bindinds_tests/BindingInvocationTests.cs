@@ -52,7 +52,7 @@ public class BindingInvocationTests
         foreach (var type in bindingClasses)
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(m => !m.Name.Equals("ExecuteAll"));
+                ;
 
             foreach (var method in methods)
             {
@@ -81,7 +81,7 @@ public class BindingInvocationTests
         foreach (var type in bindingClasses)
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(m => !m.Name.Equals("ExecuteAll"));
+                ;
 
             foreach (var method in methods)
             {
@@ -119,7 +119,7 @@ public class BindingInvocationTests
         foreach (var type in bindingClasses)
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(m => !m.Name.Equals("ExecuteAll"));
+                ;
 
             foreach (var method in methods)
             {
@@ -199,7 +199,7 @@ public class BindingInvocationTests
         foreach (var type in bindingClasses)
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(m => !m.Name.Equals("ExecuteAll"));
+                ;
 
             foreach (var method in methods)
             {
@@ -262,7 +262,7 @@ public class BindingInvocationTests
         foreach (var type in bindingClasses)
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(m => !m.Name.Equals("ExecuteAll"));
+                ;
 
             foreach (var method in methods)
             {

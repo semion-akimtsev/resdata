@@ -42,7 +42,7 @@ public class BindingCoverageTests
         var bindingClasses = GetAllBindingClasses().ToList();
         var allBindingMethods = bindingClasses
             .SelectMany(t => t.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly))
-            .Where(m => !m.Name.Equals("ExecuteAll"))
+            
             .Select(m => m.Name)
             .ToHashSet();
 
@@ -137,7 +137,7 @@ public class BindingCoverageTests
         foreach (var type in bindingClasses)
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(m => !m.Name.Equals("ExecuteAll"));
+                ;
 
             if (!methods.Any())
             {
@@ -170,7 +170,7 @@ public class BindingCoverageTests
         foreach (var type in bindingClasses)
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(m => !m.Name.Equals("ExecuteAll"));
+                ;
             
             totalMethods += methods.Count();
         }

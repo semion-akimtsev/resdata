@@ -33,7 +33,7 @@ public class ParameterMarshallingTests
         foreach (var type in bindingClasses)
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(m => !m.Name.Equals("ExecuteAll"));
+                ;
 
             foreach (var method in methods)
             {
@@ -81,7 +81,7 @@ public class ParameterMarshallingTests
         foreach (var type in bindingClasses)
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(m => !m.Name.Equals("ExecuteAll"));
+                ;
 
             foreach (var method in methods)
             {
@@ -126,7 +126,7 @@ public class ParameterMarshallingTests
         foreach (var type in bindingClasses)
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(m => !m.Name.Equals("ExecuteAll"));
+                ;
 
             foreach (var method in methods)
             {
@@ -176,7 +176,7 @@ public class ParameterMarshallingTests
         foreach (var type in bindingClasses)
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(m => !m.Name.Equals("ExecuteAll") && m.ReturnType != typeof(void));
+                .Where(m => m.ReturnType != typeof(void));
 
             foreach (var method in methods)
             {
@@ -222,7 +222,7 @@ public class ParameterMarshallingTests
         foreach (var type in bindingClasses)
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(m => !m.Name.Equals("ExecuteAll"));
+                ;
 
             foreach (var method in methods)
             {
