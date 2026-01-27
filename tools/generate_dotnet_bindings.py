@@ -11,8 +11,25 @@ SRC_DIR = os.path.join(OUT_ROOT, 'src', 'Generated')
 PROJECT_DIR = os.path.join(OUT_ROOT, 'src')
 os.makedirs(SRC_DIR, exist_ok=True)
 
-# simple regex for C prototypes (crude but works for common cases)
-proto_re = re.compile(r"^\s*([A-Za-z_][A-Za-z0-9_\s\*]+?)\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(([^;{]*)\)\s*;\s*$")
+# Function to parse a C prototype line
+def parse_prototype(line):
+    """Parse a C function prototype and return (return_type, function_name, args) or None"""
+    # Remove trailing semicolon and whitespace
+    cleaned = line.strip().rstrip(';').strip()
+    
+    # Find the pattern: identifier( where identifier is the function name
+    # We want the LAST occurrence (the actual function name, not a type name)
+    match = re.search(r'\b([A-Za-z_][A-Za-z0-9_]*)\s*\((.+)\)$', cleaned)
+    if match:
+        func_name = match.group(1)
+        args = match.group(2).strip()
+        
+        # Everything before the function name is the return type
+        ret_end = match.start(1)
+        ret_type = cleaned[:ret_end].strip()
+        
+        return (ret_type, func_name, args)
+    return None
 
 manifest = {}
 
@@ -106,14 +123,44 @@ for dp, dn, fnames in os.walk(INCLUDE_DIR):
                     depth -= 1
                 i += 1
             block = txt[start:i-1]
-            seen = set()
+            
+            # Pre-process block to join multi-line declarations
+            # Combine lines that are part of a function declaration
+            lines = []
+            current_line = ""
             for line in block.splitlines():
+                stripped = line.strip()
+                if not stripped or stripped.startswith('//'):
+                    if current_line:
+                        lines.append(current_line)
+                        current_line = ""
+                    continue
+                # If line ends with semicolon, it's complete
+                if stripped.endswith(';'):
+                    current_line += " " + stripped
+                    lines.append(current_line.strip())
+                    current_line = ""
+                # If current_line is empty and this looks like start of declaration
+                elif not current_line and (re.match(r'^[A-Za-z_]', stripped) or stripped.startswith('const ')):
+                    current_line = stripped
+                # Continue multi-line declaration
+                elif current_line:
+                    current_line += " " + stripped
+                else:
+                    # Standalone line (typedef, etc)
+                    lines.append(stripped)
+            if current_line:
+                lines.append(current_line)
+            
+            seen = set()
+            for line in lines:
                 line = line.strip()
                 if not line or line.startswith('//'):
                     continue
-                pm = proto_re.match(line)
-                if pm:
-                    ret, name, args = pm.groups()
+                
+                parsed = parse_prototype(line)
+                if parsed:
+                    ret, name, args = parsed
                     # skip typedefs and function pointer typedefs
                     if 'typedef' in ret or '(' in ret or '(' in name or ')' in name:
                         continue
@@ -291,10 +338,10 @@ if safe_handles:
             with open(path, 'r', encoding='utf-8') as fh:
                 txt = fh.read()
             for line in txt.splitlines():
-                pm = proto_re.match(line.strip())
-                if not pm:
+                parsed = parse_prototype(line.strip())
+                if not parsed:
                     continue
-                retf, namef, argsf = pm.groups()
+                retf, namef, argsf = parsed
                 if re.search(r'(_free__|_free|_destroy|_unref|_release)$', namef):
                     args_items = [s.strip() for s in argsf.split(',') if s.strip()]
                     first_arg = args_items[0] if args_items else ''
