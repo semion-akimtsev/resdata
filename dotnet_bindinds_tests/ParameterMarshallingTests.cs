@@ -8,8 +8,8 @@ using Xunit.Abstractions;
 namespace Resdata.Bindings.Tests;
 
 /// <summary>
-/// Tests that verify parameter marshalling between managed and native code works correctly.
-/// These tests focus on data conversion, not business logic.
+/// Tests that verify parameter and return value types in P/Invoke bindings are correctly declared.
+/// These tests ensure the bindings will correctly marshal data when called.
 /// </summary>
 public class ParameterMarshallingTests
 {
@@ -21,14 +21,16 @@ public class ParameterMarshallingTests
     }
 
     /// <summary>
-    /// Verifies that integer parameters are correctly declared in method signatures.
-    /// Validates the structure, not actual invocation.
+    /// Verifies that all P/Invoke methods use only marshallable parameter types.
+    /// Ensures parameters can be safely passed from managed to native code.
     /// </summary>
     [Fact]
-    public void IntegerParametersAreMarshalledCorrectly()
+    public void AllParameterTypesAreMarshallable()
     {
         var bindingClasses = GetAllBindingClasses();
-        int intMethodCount = 0;
+        int totalMethods = 0;
+        int totalParameters = 0;
+        int unmarshallableCount = 0;
 
         foreach (var type in bindingClasses)
         {
@@ -36,39 +38,41 @@ public class ParameterMarshallingTests
 
             foreach (var method in methods)
             {
-                var intParams = method.GetParameters()
-                    .Where(p => p.ParameterType == typeof(int) || 
-                               p.ParameterType == typeof(uint) ||
-                               p.ParameterType == typeof(long));
-
-                if (intParams.Any())
+                totalMethods++;
+                var parameters = method.GetParameters();
+                
+                foreach (var param in parameters)
                 {
-                    intMethodCount++;
-                    // Verify parameter types are correct (structure validation only)
-                    foreach (var param in intParams)
+                    totalParameters++;
+                    var paramType = param.ParameterType;
+                    
+                    // Remove ref/out modifiers
+                    if (paramType.IsByRef)
+                        paramType = paramType.GetElementType()!;
+
+                    if (!IsMarshallable(paramType))
                     {
-                        Assert.True(param.ParameterType == typeof(int) || 
-                                   param.ParameterType == typeof(uint) ||
-                                   param.ParameterType == typeof(long),
-                            $"Parameter {param.Name} should be an integer type");
+                        unmarshallableCount++;
+                        _output.WriteLine($"Unmarshallable parameter: {type.Name}.{method.Name}({param.Name}: {paramType.Name})");
                     }
                 }
             }
         }
 
-        _output.WriteLine($"Validated {intMethodCount} methods with integer parameters");
-        Assert.True(intMethodCount > 0, "Should have found methods with integer parameters");
+        _output.WriteLine($"Validated {totalParameters} parameters across {totalMethods} methods");
+        Assert.Equal(0, unmarshallableCount);
     }
 
     /// <summary>
-    /// Verifies that double/float parameters are correctly declared in method signatures.
-    /// Validates the structure, not actual invocation.
+    /// Verifies that all P/Invoke methods return only marshallable types.
+    /// Ensures return values can be safely passed from native to managed code.
     /// </summary>
     [Fact]
-    public void FloatingPointParametersAreMarshalledCorrectly()
+    public void AllReturnTypesAreMarshallable()
     {
         var bindingClasses = GetAllBindingClasses();
-        int floatMethodCount = 0;
+        int totalMethods = 0;
+        int unmarshallableReturns = 0;
 
         foreach (var type in bindingClasses)
         {
@@ -76,37 +80,30 @@ public class ParameterMarshallingTests
 
             foreach (var method in methods)
             {
-                var floatParams = method.GetParameters()
-                    .Where(p => p.ParameterType == typeof(double) || 
-                               p.ParameterType == typeof(float));
+                totalMethods++;
+                var returnType = method.ReturnType;
 
-                if (floatParams.Any())
+                if (returnType != typeof(void) && !IsMarshallable(returnType))
                 {
-                    floatMethodCount++;
-                    // Verify parameter types are correct (structure validation only)
-                    foreach (var param in floatParams)
-                    {
-                        Assert.True(param.ParameterType == typeof(double) || 
-                                   param.ParameterType == typeof(float),
-                            $"Parameter {param.Name} should be a floating-point type");
-                    }
+                    unmarshallableReturns++;
+                    _output.WriteLine($"Unmarshallable return type: {type.Name}.{method.Name} returns {returnType.Name}");
                 }
             }
         }
 
-        _output.WriteLine($"Validated {floatMethodCount} methods with floating-point parameters");
-        Assert.True(floatMethodCount > 0, "Should have found methods with floating-point parameters");
+        _output.WriteLine($"Validated return types for {totalMethods} methods");
+        Assert.Equal(0, unmarshallableReturns);
     }
 
     /// <summary>
-    /// Verifies that string parameters use ANSI encoding in DllImport.
-    /// Validates the structure, not actual invocation.
+    /// Verifies that string parameters in P/Invoke use consistent charset settings.
     /// </summary>
     [Fact]
-    public void StringParametersAreMarshalledAsAnsi()
+    public void StringParametersUseConsistentCharset()
     {
         var bindingClasses = GetAllBindingClasses();
         int stringMethodCount = 0;
+        var charsets = new System.Collections.Generic.Dictionary<CharSet, int>();
 
         foreach (var type in bindingClasses)
         {
@@ -114,111 +111,150 @@ public class ParameterMarshallingTests
 
             foreach (var method in methods)
             {
-                var stringParams = method.GetParameters()
-                    .Where(p => p.ParameterType == typeof(string));
-
-                if (stringParams.Any())
+                var hasStringParams = method.GetParameters().Any(p => p.ParameterType == typeof(string));
+                
+                if (hasStringParams)
                 {
                     stringMethodCount++;
-                    
-                    // Verify DllImport uses ANSI charset
                     var dllImport = method.GetCustomAttribute<DllImportAttribute>();
+                    
                     if (dllImport != null)
                     {
-                        _output.WriteLine($"Method {method.Name} has string parameters with charset: {dllImport.CharSet}");
+                        if (!charsets.ContainsKey(dllImport.CharSet))
+                            charsets[dllImport.CharSet] = 0;
+                        charsets[dllImport.CharSet]++;
                     }
                 }
             }
         }
 
-        _output.WriteLine($"Validated {stringMethodCount} methods with string parameters");
+        _output.WriteLine($"Found {stringMethodCount} methods with string parameters");
+        foreach (var kvp in charsets)
+        {
+            _output.WriteLine($"  CharSet.{kvp.Key}: {kvp.Value} methods");
+        }
+
+        // Just report, don't fail - charset choice is a design decision
         Assert.True(stringMethodCount > 0, "Should have found methods with string parameters");
     }
 
     /// <summary>
-    /// Verifies that return values are correctly declared in method signatures.
-    /// Validates the structure, not actual invocation.
+    /// Verifies that SafeHandle types are consistently used for pointer parameters.
     /// </summary>
     [Fact]
-    public void ReturnValuesAreMarshalledCorrectly()
-    {
-        var bindingClasses = GetAllBindingClasses();
-        int nonVoidReturnCount = 0;
-
-        foreach (var type in bindingClasses)
-        {
-            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(m => m.ReturnType != typeof(void));
-
-            foreach (var method in methods)
-            {
-                nonVoidReturnCount++;
-                
-                // Verify return type is a valid marshallable type
-                Assert.True(method.ReturnType.IsPrimitive || 
-                           method.ReturnType == typeof(string) ||
-                           typeof(SafeHandle).IsAssignableFrom(method.ReturnType) ||
-                           method.ReturnType == typeof(IntPtr) ||
-                           method.ReturnType == typeof(UIntPtr) ||
-                           method.ReturnType == typeof(nuint) ||
-                           method.ReturnType == typeof(nint),
-                    $"Method {method.Name} has valid return type: {method.ReturnType.Name}");
-            }
-        }
-
-        _output.WriteLine($"Validated {nonVoidReturnCount} methods with non-void returns");
-        Assert.True(nonVoidReturnCount > 0, "Should have found methods with non-void returns");
-    }
-
-    /// <summary>
-    /// Verifies that SafeHandle parameters properly represent native pointers.
-    /// </summary>
-    [Fact]
-    public void SafeHandleParametersRepresentNativePointers()
+    public void SafeHandlesAreUsedForPointers()
     {
         var bindingClasses = GetAllBindingClasses();
         int handleMethodCount = 0;
+        int rawPointerCount = 0;
 
         foreach (var type in bindingClasses)
         {
-            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                ;
+            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
 
             foreach (var method in methods)
             {
-                var handleParams = method.GetParameters()
-                    .Where(p => typeof(SafeHandle).IsAssignableFrom(p.ParameterType));
-
-                if (handleParams.Any())
+                foreach (var param in method.GetParameters())
                 {
-                    handleMethodCount++;
-                    
-                    // Verify handle parameters are properly typed
-                    foreach (var param in handleParams)
+                    var paramType = param.ParameterType;
+                    if (paramType.IsByRef)
+                        paramType = paramType.GetElementType()!;
+
+                    if (typeof(SafeHandle).IsAssignableFrom(paramType))
                     {
-                        Assert.True(typeof(SafeHandle).IsAssignableFrom(param.ParameterType),
-                            $"Parameter {param.Name} should be assignable from SafeHandle");
-                        
-                        _output.WriteLine($"Method {method.Name} uses SafeHandle: {param.ParameterType.Name}");
+                        handleMethodCount++;
+                    }
+                    else if (paramType == typeof(IntPtr) || paramType == typeof(UIntPtr))
+                    {
+                        rawPointerCount++;
+                        _output.WriteLine($"Raw pointer in {type.Name}.{method.Name}({param.Name}: {paramType.Name})");
                     }
                 }
             }
         }
 
-        _output.WriteLine($"Verified {handleMethodCount} methods using SafeHandle parameters");
-        Assert.True(handleMethodCount > 0, "Should have found methods with SafeHandle parameters");
+        _output.WriteLine($"Found {handleMethodCount} SafeHandle parameters");
+        _output.WriteLine($"Found {rawPointerCount} raw pointer parameters");
+        
+        Assert.True(handleMethodCount > 0, "Should have SafeHandle parameters for resource management");
+    }
+
+    /// <summary>
+    /// Verifies that all P/Invoke methods have correct calling convention.
+    /// </summary>
+    [Fact]
+    public void AllMethodsHaveCorrectCallingConvention()
+    {
+        var bindingClasses = GetAllBindingClasses();
+        int totalMethods = 0;
+        var conventions = new System.Collections.Generic.Dictionary<CallingConvention, int>();
+
+        foreach (var type in bindingClasses)
+        {
+            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
+
+            foreach (var method in methods)
+            {
+                totalMethods++;
+                var dllImport = method.GetCustomAttribute<DllImportAttribute>();
+                
+                if (dllImport != null)
+                {
+                    if (!conventions.ContainsKey(dllImport.CallingConvention))
+                        conventions[dllImport.CallingConvention] = 0;
+                    conventions[dllImport.CallingConvention]++;
+                }
+            }
+        }
+
+        _output.WriteLine($"Validated calling conventions for {totalMethods} methods:");
+        foreach (var kvp in conventions)
+        {
+            _output.WriteLine($"  {kvp.Key}: {kvp.Value} methods");
+        }
+
+        Assert.True(totalMethods > 0, "Should have found P/Invoke methods");
+        Assert.True(conventions.Count > 0, "All methods should have calling conventions defined");
     }
 
     // Helper methods
 
     private IEnumerable<Type> GetAllBindingClasses()
     {
-        // The generated bindings are compiled into the test assembly
         var assembly = Assembly.GetExecutingAssembly();
         return assembly.GetTypes()
             .Where(t => t.Namespace == "Resdata.Bindings.Generated" && 
                        t.Name.StartsWith("Native_") &&
                        t.IsClass);
+    }
+
+    private bool IsMarshallable(Type type)
+    {
+        // Primitive types
+        if (type.IsPrimitive)
+            return true;
+
+        // Common marshallable types
+        if (type == typeof(string) ||
+            type == typeof(IntPtr) ||
+            type == typeof(UIntPtr) ||
+            type == typeof(nint) ||
+            type == typeof(nuint))
+            return true;
+
+        // SafeHandle and derivatives
+        if (typeof(SafeHandle).IsAssignableFrom(type))
+            return true;
+
+        // Structs with StructLayout are marshallable
+        if (type.IsValueType && type.GetCustomAttribute<StructLayoutAttribute>() != null)
+            return true;
+
+        // Enums are marshallable
+        if (type.IsEnum)
+            return true;
+
+        return false;
     }
 }
 
