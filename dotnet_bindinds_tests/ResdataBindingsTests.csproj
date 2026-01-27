@@ -24,11 +24,6 @@
     </PackageReference>
   </ItemGroup>
 
-  <!-- Reference the bindings project only on Windows where it can build -->
-  <ItemGroup Condition="'$(IsWindows)' == 'true'">
-    <ProjectReference Include="..\dotnet_bindings\src\ResdataBindings.csproj" />
-  </ItemGroup>
-
   <ItemGroup>
     <!-- Include all generated bindings directly for testing -->
     <Compile Include="..\dotnet_bindings\src\Generated\*.cs" Link="Generated\%(Filename)%(Extension)" />
