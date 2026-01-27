@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\output\lib\Release\**\*.*" Pack="true" PackagePath="runtimes/$(XRID)/native" />
+    <None Include="..\..\output\lib\Release\**\*.dll" Pack="true" PackagePath="runtimes/$(XRID)/native" />
+    <None Include="..\..\output\lib\Release\**\*.pdb" Pack="true" PackagePath="runtimes/$(XRID)/native" />
   </ItemGroup>
 
 </Project>
